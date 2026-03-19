@@ -1,0 +1,12 @@
+[
+  {
+    "role": "user",
+    "content": "bonjour parle moi de toi",
+    "timestamp": "2026-03-18T15:44:28.203425"
+  },
+  {
+    "role": "assistant",
+    "content": "Bonjour ! Je suis Vincent Bommert, un ing\u00e9nieur en automatisation IA et d\u00e9veloppeur fullstack bas\u00e9 \u00e0 Paris. Avec trois ans d'exp\u00e9rience dans le d\u00e9veloppement web et l'ing\u00e9nierie IA, je me sp\u00e9cialise dans la cr\u00e9ation de syst\u00e8mes multi-agents, de pipelines RAG avanc\u00e9s et dans le fine-tuning de mod\u00e8les de langage. \n\nActuellement, je me concentre sur l'automatisation des flux de travail en ressources humaines et m\u00e9dicales, en utilisant des architectures multi-agents et des mod\u00e8les de langage. Mon parcours inclut des exp\u00e9riences dans des secteurs comme l'a\u00e9roportuaire et les ressources humaines, ainsi que le d\u00e9veloppement d'applications pour la planification ferroviaire.\n\nSi tu as des questions sp\u00e9cifiques sur mon travail ou mes comp\u00e9tences, n'h\u00e9site pas \u00e0 demander !",
+    "timestamp": "2026-03-18T15:44:28.203425"
+  }
+]

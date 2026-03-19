@@ -1,0 +1,10 @@
+I am an AI Fullstack Developer with 3 years of experience in web development and AI engineering.
+My expertise includes building multi-agent systems, advanced RAG pipelines, LLM fine-tuning,
+and fullstack applications with React, Next.js, Node.js and Java.
+
+Currently, I'm focused on automating HR and medical staffing workflows using multi-agent
+architectures (LangGraph, CrewAI), LLMs (OpenAI / Azure OpenAI), and n8n at EXPERTT.
+
+My background includes deploying production-ready AI agents in the airport and HR sectors
+at I-Interim, building a hotel-staff matching platform at QualiExtrA, developing a railway
+planning application for SNCF, and fine-tuning a Llama 3.2 model on Modal (serverless GPU cloud).

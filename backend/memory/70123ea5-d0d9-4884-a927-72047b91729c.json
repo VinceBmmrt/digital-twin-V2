@@ -1,0 +1,18 @@
+[
+  {
+    "role": "user",
+    "content": "qui es tu"
+  },
+  {
+    "role": "assistant",
+    "content": "Je suis Vincent Bommert, un développeur IA et full stack avec une expérience de trois ans dans la conception et le déploiement de systèmes multi-agents, notamment dans les secteurs des ressources humaines et aéroportuaires. Je travaille avec diverses technologies telles que React, Node.js, Java, ainsi qu'avec l'IA, y compris le fine-tuning de modèles comme Llama. Je suis passionné par la création d'architectures AI pour automatiser des processus manuels et améliorer l'efficacité. Si tu as des questions ou si tu souhaites en savoir plus sur mes projets, n'hésite pas à demander ! 😊"
+  },
+  {
+    "role": "user",
+    "content": "repete"
+  },
+  {
+    "role": "assistant",
+    "content": "Je suis Vincent Bommert, un développeur IA et full stack avec trois ans d'expérience dans la conception et le déploiement de systèmes multi-agents, principalement dans les secteurs des ressources humaines et aéroportuaires. Je travaille avec des technologies comme React, Node.js, Java, et je me spécialise dans l'IA, y compris le fine-tuning de modèles tels que Llama. J'ai une passion pour la création d'architectures IA qui remplacent des processus manuels pour améliorer l'efficacité. Si tu as des questions ou si tu veux en savoir plus sur mes projets, n'hésite pas à me le faire savoir ! 😊"
+  }
+]
