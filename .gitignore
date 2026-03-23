@@ -1,28 +1,35 @@
-.env
-**/.env
 
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate.d/
+*.tfvars
+!terraform.tfvars
+!prod.tfvars
 
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env.development
-.env.test
-.env.production
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env.development
-.env.test
-.env.production
-
+# Lambda packages
 lambda-deployment.zip
 lambda-package/
 
-memory/
-__pycache__/
-backend/__pycache__/*
+# Environment files
+.env
+.env.*
 
-*.py[cod]
+# Node
+node_modules/
+out/
+.next/
+
+# Python
+__pycache__/
 *.pyc
+.venv/
+uv.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
