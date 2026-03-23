@@ -118,7 +118,7 @@ export default function Home() {
             <div key={c} style={{width:'9px',height:'9px',borderRadius:'50%',background:c,opacity:.5}}/>
           ))}
           <span style={{marginLeft:'14px',fontSize:'9px',color:'#2a6640',letterSpacing:'.13em'}}>
-            TWIN-DISTRIBUTION — SESSION ACTIVE
+            AI DIGITAL TWIN — SESSION ACTIVE
           </span>
         </div>
         <div style={{display:'flex',gap:'22px'}}>
@@ -238,7 +238,7 @@ export default function Home() {
           borderTop:'1px solid rgba(0,210,80,.05)',
         }}>
           <span style={{fontSize:'8px',color:'#2a6640',letterSpacing:'.1em'}}>
-            © 2025 VINCENT BOMMERT — TWIN-DISTRIBUTION
+            © 2025 VINCENT BOMMERT — AI DIGITAL TWIN
           </span>
           <div style={{display:'flex',gap:'14px'}}>
             {['LLM','RAG','MLOPS','CLOUD'].map(t=>(

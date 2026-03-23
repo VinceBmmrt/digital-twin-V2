@@ -35,7 +35,7 @@ const SUGGESTIONS = [
     'Quelles sont tes expériences professionnelles ?',
     'Sur quels types de projets as-tu travaillé ?',
     'Quelle est ta disponibilité et tes prétentions ?',
-    'Quelles technologies maîtrises-tu le mieux ?',
+    'Quelles technologies maîtrises tu le mieux ?',
 ];
 
 
@@ -244,7 +244,7 @@ export default function Twin() {
                     {!bootDone ? (
                         <div style={{ fontSize: '10px', lineHeight: 2.2 }}>
                             {([
-                                ['> INITIALIZING TWIN-DISTRIBUTION...', '#3a7a50', false],
+                                ['> INITIALIZING AI DIGITAL TWIN...', '#3a7a50', false],
                                 ['> LOADING LLM CONTEXT WINDOW.............. OK', '#3a7a50', false],
                                 ['> MOUNTING EXPERIENCE CORPUS (8 ans)...... OK', '#3a7a50', false],
                                 ['> INDEXING RAG KNOWLEDGE BASE............. OK', '#4a9060', false],
@@ -471,15 +471,10 @@ export default function Twin() {
                         </button>
                     </div>
 
-                    <div style={{ marginTop: '7px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div style={{ display: 'flex', gap: '12px' }}>
-                            <span style={{ fontSize: '7px', color: '#5aaa70', letterSpacing: '.08em' }}>↵ ENVOYER</span>
-                            <span style={{ fontSize: '7px', color: '#3a7a50', letterSpacing: '.08em' }}>↑↓ HISTORIQUE</span>
-                            <span style={{ fontSize: '7px', color: '#3a7a50', letterSpacing: '.08em' }}>ESC EFFACER</span>
-                        </div>
-                        <span style={{ fontSize: '7px', color: '#3a7a50', letterSpacing: '.08em' }}>
-                            TWIN-DISTRIBUTION · VINCENT BOMMERT © 2025
-                        </span>
+                    <div style={{ marginTop: '7px', display: 'flex', gap: '12px' }}>
+                        <span style={{ fontSize: '7px', color: '#5aaa70', letterSpacing: '.08em' }}>↵ ENVOYER</span>
+                        <span style={{ fontSize: '7px', color: '#3a7a50', letterSpacing: '.08em' }}>↑↓ HISTORIQUE</span>
+                        <span style={{ fontSize: '7px', color: '#3a7a50', letterSpacing: '.08em' }}>ESC EFFACER</span>
                     </div>
                 </div>
 
