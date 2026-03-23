@@ -246,7 +246,7 @@ export default function Home() {
             ))}
           </div>
           <span style={{fontSize:'8px',color:'#2a6640',letterSpacing:'.1em'}}>
-            POWERED BY ANTHROPIC
+          Powered by Vincent Bommert AI
           </span>
         </div>
 

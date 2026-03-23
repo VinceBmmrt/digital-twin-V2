@@ -246,9 +246,9 @@ export default function Twin() {
                             {([
                                 ['> INITIALIZING AI DIGITAL TWIN...', '#3a7a50', false],
                                 ['> LOADING LLM CONTEXT WINDOW.............. OK', '#3a7a50', false],
-                                ['> MOUNTING EXPERIENCE CORPUS (8 ans)...... OK', '#3a7a50', false],
+                                ['> MOUNTING EXPERIENCE CORPUS...... OK', '#3a7a50', false],
                                 ['> INDEXING RAG KNOWLEDGE BASE............. OK', '#4a9060', false],
-                                ['> CONNECTING TO CLAUDE SONNET.............. OK', '#4a9060', false],
+                                ['> CONNECTING TO NOVA MODELS.............. OK', '#4a9060', false],
                                 ['> ALL SYSTEMS OPERATIONAL.', '#00d250', true],
                             ] as [string, string, boolean][]).map(([line, color, glow], i) => (
                                 <div key={String(line)} style={{
