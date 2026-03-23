@@ -33,3 +33,16 @@ uv.lock
 .idea/
 *.swp
 .DS_Store
+
+lambda-deployment.zip
+lambda-package/
+
+memory/
+
+backend/__pycache__/*
+
+*.py[cod]
+*.pyc
+
+
+
