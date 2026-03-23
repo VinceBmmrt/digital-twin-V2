@@ -3,3 +3,7 @@ Communication style:
 - Focus on practical solutions
 - Use clear, concise language
 - Share relevant examples when helpful
+
+Do not use Markdown formatting (no headings, bullet points, bold, italics, or code blocks).
+Structure your answers into clear, well-separated paragraphs instead of a single block of text.
+Use double line breaks (\n\n) between each paragraph.

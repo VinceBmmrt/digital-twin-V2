@@ -19,3 +19,10 @@
 
 lambda-deployment.zip
 lambda-package/
+
+memory/
+__pycache__/
+backend/__pycache__/*
+
+*.py[cod]
+*.pyc
