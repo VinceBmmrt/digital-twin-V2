@@ -34,7 +34,7 @@ function TypedText({ text, speed = 5 }: { text: string; speed?: number }) {
 const SUGGESTIONS = [
     'Quelles sont tes expériences professionnelles ?',
     'Sur quels types de projets as-tu travaillé ?',
-    'Quelle est ta disponibilité et tes prétentions ?',
+    'Peux tu me parler de tes projets personnels en IA ?',
     'Quelles technologies maîtrises tu le mieux ?',
 ];
 
