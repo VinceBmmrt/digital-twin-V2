@@ -60,11 +60,10 @@ jobs:
 
       - name: Run Deployment Script
         run: |
-          # Set environment variables for the script
           export AWS_ACCOUNT_ID=${{ secrets.AWS_ACCOUNT_ID }}
           export DEFAULT_AWS_REGION=${{ secrets.DEFAULT_AWS_REGION }}
+          export GITHUB_REPOSITORY=${{ github.repository }}  # ✅ ajout
 
-          # Make script executable and run it
           chmod +x scripts/deploy.sh
           ./scripts/deploy.sh ${{ github.event.inputs.environment || 'dev' }}
         env:

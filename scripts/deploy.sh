@@ -3,6 +3,7 @@ set -e
 
 ENVIRONMENT=${1:-dev}
 PROJECT_NAME=${2:-twin}
+GITHUB_REPOSITORY=${GITHUB_REPOSITORY:-"VinceBmmrt/digital-twin-V2"}
 
 echo "🚀 Deploying ${PROJECT_NAME} to ${ENVIRONMENT}..."
 
@@ -18,7 +19,7 @@ AWS_REGION=${DEFAULT_AWS_REGION:-eu-west-1}
 STATE_BUCKET="twin-terraform-state-${AWS_ACCOUNT_ID}"
 LOCK_TABLE="twin-terraform-locks"
 
-# ✅ NOUVEAU : Créer le bucket S3 s'il n'existe pas
+# ✅ Créer le bucket S3 s'il n'existe pas
 echo "🪣 Ensuring Terraform state bucket exists..."
 if ! aws s3api head-bucket --bucket "$STATE_BUCKET" 2>/dev/null; then
   echo "  → Creating bucket $STATE_BUCKET..."
@@ -39,7 +40,7 @@ else
   echo "  ✅ Bucket déjà existant"
 fi
 
-# ✅ NOUVEAU : Créer la table DynamoDB pour les locks si elle n'existe pas
+# ✅ Créer la table DynamoDB pour les locks si elle n'existe pas
 echo "🔒 Ensuring DynamoDB lock table exists..."
 if ! aws dynamodb describe-table --table-name "$LOCK_TABLE" --region "$AWS_REGION" 2>/dev/null; then
   echo "  → Creating DynamoDB table $LOCK_TABLE..."
@@ -68,11 +69,17 @@ else
   terraform workspace select "$ENVIRONMENT"
 fi
 
-# Use prod.tfvars for production environment
+# ✅ Toutes les vars communes incluant github_repository
+TF_COMMON_VARS=(
+  -var="project_name=$PROJECT_NAME"
+  -var="environment=$ENVIRONMENT"
+  -var="github_repository=$GITHUB_REPOSITORY"
+)
+
 if [ "$ENVIRONMENT" = "prod" ]; then
-  TF_APPLY_CMD=(terraform apply -var-file=prod.tfvars -var="project_name=$PROJECT_NAME" -var="environment=$ENVIRONMENT" -auto-approve)
+  TF_APPLY_CMD=(terraform apply -var-file=prod.tfvars "${TF_COMMON_VARS[@]}" -auto-approve)
 else
-  TF_APPLY_CMD=(terraform apply -var="project_name=$PROJECT_NAME" -var="environment=$ENVIRONMENT" -auto-approve)
+  TF_APPLY_CMD=(terraform apply "${TF_COMMON_VARS[@]}" -auto-approve)
 fi
 
 echo "🎯 Applying Terraform..."
@@ -85,7 +92,6 @@ CUSTOM_URL=$(terraform output -raw custom_domain_url 2>/dev/null || true)
 # 3. Build + deploy frontend
 cd ../frontend
 
-# Create production environment file with API URL
 echo "📝 Setting API URL for production..."
 echo "NEXT_PUBLIC_API_URL=$API_URL" > .env.production
 
