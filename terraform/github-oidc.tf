@@ -104,6 +104,8 @@ resource "aws_iam_role_policy_attachment" "github_route53" {
 }
 
 # Custom policy for additional permissions
+
+
 resource "aws_iam_role_policy" "github_additional" {
   name = "github-actions-additional"
   role = aws_iam_role.github_actions.id
@@ -129,14 +131,16 @@ resource "aws_iam_role_policy" "github_additional" {
           "iam:TagRole",
           "iam:UntagRole",
           "iam:ListInstanceProfilesForRole",
-          "sts:GetCallerIdentity"
+          "sts:GetCallerIdentity",
+          "iam:CreateOpenIDConnectProvider",
+          "iam:DeleteOpenIDConnectProvider",
+          "iam:GetOpenIDConnectProvider"
         ]
         Resource = "*"
       }
     ]
   })
 }
-
 output "github_actions_role_arn" {
   value = aws_iam_role.github_actions.arn
 }
