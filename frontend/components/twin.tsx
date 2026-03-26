@@ -2,12 +2,64 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Send } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 
 interface Message {
     id: string;
     role: 'user' | 'assistant';
     content: string;
     timestamp: Date;
+}
+
+const markdownStyles: React.CSSProperties = {
+    color: '#00b844',
+    fontSize: '13px',
+    lineHeight: 1.78,
+    fontWeight: 300,
+    fontFamily: "'IBM Plex Mono', monospace",
+};
+
+function MarkdownContent({ content }: { content: string }) {
+    return (
+        <div style={markdownStyles}>
+            <ReactMarkdown
+                components={{
+                    a: ({ href, children }) => (
+                        <a
+                            href={href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                                color: '#00d250',
+                                textDecoration: 'underline',
+                                textUnderlineOffset: '3px',
+                                textShadow: '0 0 8px rgba(0,210,80,.3)',
+                            }}
+                        >
+                            {children}
+                        </a>
+                    ),
+                    p: ({ children }) => (
+                        <p style={{ margin: '0 0 8px' }}>{children}</p>
+                    ),
+                    strong: ({ children }) => (
+                        <strong style={{ color: '#00d250', fontWeight: 500 }}>{children}</strong>
+                    ),
+                    ol: ({ children }) => (
+                        <ol style={{ paddingLeft: '18px', margin: '4px 0 8px' }}>{children}</ol>
+                    ),
+                    ul: ({ children }) => (
+                        <ul style={{ paddingLeft: '18px', margin: '4px 0 8px' }}>{children}</ul>
+                    ),
+                    li: ({ children }) => (
+                        <li style={{ marginBottom: '4px' }}>{children}</li>
+                    ),
+                }}
+            >
+                {content}
+            </ReactMarkdown>
+        </div>
+    );
 }
 
 function TypedText({ text, speed = 5 }: { text: string; speed?: number }) {
@@ -23,10 +75,13 @@ function TypedText({ text, speed = 5 }: { text: string; speed?: number }) {
         }, speed);
         return () => clearInterval(iv);
     }, [text, speed]);
+
+    if (done) return <MarkdownContent content={text} />;
+
     return (
-        <span>
+        <span style={{ color: '#00b844', fontSize: '13px', lineHeight: 1.78, fontWeight: 300 }}>
             {displayed}
-            {!done && <span style={{ animation: 'blink .6s step-end infinite', color: '#00d250' }}>▌</span>}
+            <span style={{ animation: 'blink .6s step-end infinite', color: '#00d250' }}>▌</span>
         </span>
     );
 }
@@ -287,8 +342,6 @@ export default function Twin() {
                                 </p>
                             </div>
 
-
-
                             <div style={{
                                 display: 'flex', alignItems: 'center', gap: '10px',
                                 margin: '0 0 12px',
@@ -376,14 +429,12 @@ export default function Twin() {
                                                 borderLeft: '2px solid rgba(0,210,80,.6)',
                                                 padding: '12px 16px',
                                                 borderRadius: '0 3px 3px 0',
-                                                color: '#00b844',
-                                                fontSize: '13px', lineHeight: 1.78, fontWeight: 300,
                                                 boxShadow: '0 2px 18px rgba(0,0,0,.22)',
-                                                whiteSpace: 'pre-wrap',
                                             }}>
                                                 {idx === messages.length - 1 && msg.role === 'assistant'
-                                                    ? <TypedText text={msg.content}/>
-                                                    : msg.content}
+                                                    ? <TypedText text={msg.content} />
+                                                    : <MarkdownContent content={msg.content} />
+                                                }
                                             </div>
                                         </div>
                                     )}
