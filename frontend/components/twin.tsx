@@ -11,9 +11,17 @@ interface Message {
     timestamp: Date;
 }
 
+const markdownStyles: React.CSSProperties = {
+    color: '#00b844',
+    fontSize: '13px',
+    lineHeight: 1.78,
+    fontWeight: 300,
+    fontFamily: "'IBM Plex Mono', monospace",
+};
+
 function MarkdownContent({ content }: { content: string }) {
     return (
-        <div className="text-[#00b844] text-[13px] leading-[1.78] font-light font-['IBM_Plex_Mono',monospace]">
+        <div style={markdownStyles}>
             <ReactMarkdown
                 components={{
                     a: ({ href, children }) => (
@@ -21,25 +29,30 @@ function MarkdownContent({ content }: { content: string }) {
                             href={href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-[#00d250] underline underline-offset-[3px] [text-shadow:0_0_8px_rgba(0,210,80,.3)] hover:opacity-80 transition-opacity"
+                            style={{
+                                color: '#00d250',
+                                textDecoration: 'underline',
+                                textUnderlineOffset: '3px',
+                                textShadow: '0 0 8px rgba(0,210,80,.3)',
+                            }}
                         >
                             {children}
                         </a>
                     ),
                     p: ({ children }) => (
-                        <p className="mb-2 last:mb-0">{children}</p>
+                        <p style={{ margin: '0 0 8px' }}>{children}</p>
                     ),
                     strong: ({ children }) => (
-                        <strong className="text-[#00d250] font-medium">{children}</strong>
+                        <strong style={{ color: '#00d250', fontWeight: 500 }}>{children}</strong>
                     ),
                     ol: ({ children }) => (
-                        <ol className="pl-[18px] my-1 mb-2">{children}</ol>
+                        <ol style={{ paddingLeft: '18px', margin: '4px 0 8px' }}>{children}</ol>
                     ),
                     ul: ({ children }) => (
-                        <ul className="pl-[18px] my-1 mb-2">{children}</ul>
+                        <ul style={{ paddingLeft: '18px', margin: '4px 0 8px' }}>{children}</ul>
                     ),
                     li: ({ children }) => (
-                        <li className="mb-1">{children}</li>
+                        <li style={{ marginBottom: '4px' }}>{children}</li>
                     ),
                 }}
             >
@@ -66,9 +79,9 @@ function TypedText({ text, speed = 5 }: { text: string; speed?: number }) {
     if (done) return <MarkdownContent content={text} />;
 
     return (
-        <span className="text-[#00b844] text-[13px] leading-[1.78] font-light">
+        <span style={{ color: '#00b844', fontSize: '13px', lineHeight: 1.78, fontWeight: 300 }}>
             {displayed}
-            <span className="animate-[blink_.6s_step-end_infinite] text-[#00d250]">▌</span>
+            <span style={{ animation: 'blink .6s step-end infinite', color: '#00d250' }}>▌</span>
         </span>
     );
 }
@@ -79,6 +92,8 @@ const SUGGESTIONS = [
     'Peux tu me parler de tes projets personnels en IA ?',
     'Quelles technologies maîtrises tu le mieux ?',
 ];
+
+
 
 export default function Twin() {
     const [messages, setMessages] = useState<Message[]>([]);
@@ -156,34 +171,34 @@ export default function Twin() {
     }, []);
 
     return (
-        <div className="relative h-full font-['IBM_Plex_Mono',monospace]">
+        <div style={{ position: 'relative', height: '100%', fontFamily: "'IBM Plex Mono', monospace" }}>
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Bebas+Neue&display=swap');
 
-                @keyframes blink     { 0%,100%{opacity:1} 50%{opacity:0} }
-                @keyframes scanline  { 0%{top:-2px} 100%{top:calc(100% + 2px)} }
-                @keyframes bootLine  { from{opacity:0;transform:translateX(-4px)} to{opacity:1;transform:translateX(0)} }
-                @keyframes msgIn     { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
-                @keyframes barWave   { 0%,100%{transform:scaleY(.2)} 50%{transform:scaleY(1)} }
-                @keyframes pulseGlow { 0%,100%{opacity:.45;transform:scale(1)} 50%{opacity:1;transform:scale(1.25)} }
-                @keyframes tagIn     { from{opacity:0;transform:scale(.88)} to{opacity:1;transform:scale(1)} }
+                @keyframes blink      { 0%,100%{opacity:1}  50%{opacity:0} }
+                @keyframes scanline   { 0%{top:-2px} 100%{top:calc(100% + 2px)} }
+                @keyframes bootLine   { from{opacity:0;transform:translateX(-4px)} to{opacity:1;transform:translateX(0)} }
+                @keyframes msgIn      { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
+                @keyframes barWave    { 0%,100%{transform:scaleY(.2)} 50%{transform:scaleY(1)} }
+                @keyframes pulseGlow  { 0%,100%{opacity:.45;transform:scale(1)} 50%{opacity:1;transform:scale(1.25)} }
+                @keyframes tagIn      { from{opacity:0;transform:scale(.88)} to{opacity:1;transform:scale(1)} }
 
-                .msg-in  { animation: msgIn .18s ease both; }
-                .ctx-tag { animation: tagIn .3s ease both; }
+                .msg-in    { animation: msgIn .18s ease both; }
+                .ctx-tag   { animation: tagIn .3s ease both; }
 
                 ::-webkit-scrollbar       { width: 2px; }
                 ::-webkit-scrollbar-thumb { background: rgba(0,210,80,.12); border-radius: 2px; }
 
-                .twin-input::placeholder { color:#3a7a50; font-family:'IBM Plex Mono',monospace; font-style:italic; font-size:12px; }
+                input::placeholder { color:#3a7a50; font-family:'IBM Plex Mono',monospace; font-style:italic; font-size:12px; }
 
                 .sug-btn:hover {
-                    background: rgba(0,210,80,.06) !important;
+                    background:  rgba(0,210,80,.06) !important;
                     border-color: rgba(0,210,80,.25) !important;
                     color: #00d250 !important;
                 }
                 .send-btn:hover {
-                    background: rgba(0,210,80,.18) !important;
-                    box-shadow: 0 0 12px rgba(0,210,80,.2) !important;
+                    background:  rgba(0,210,80,.18) !important;
+                    box-shadow:  0 0 12px rgba(0,210,80,.2) !important;
                 }
                 .input-wrap:focus-within {
                     border-color: rgba(0,210,80,.22) !important;
@@ -192,57 +207,97 @@ export default function Twin() {
             `}</style>
 
             {/* ── CRT shell ── */}
-            <div
-                className={`h-full bg-gradient-to-b from-[#03080a] to-[#020507] flex flex-col overflow-hidden relative transition-[filter] duration-75 ${glitch ? 'brightness-125 hue-rotate-[14deg]' : ''}`}
-            >
+            <div style={{
+                height: '100%',
+                background: 'linear-gradient(180deg,#03080a 0%,#020507 100%)',
+                display: 'flex', flexDirection: 'column', overflow: 'hidden',
+                position: 'relative',
+                filter: glitch ? 'brightness(1.25) hue-rotate(14deg)' : undefined,
+                transition: 'filter .07s',
+            }}>
+
                 {/* Scanline + CRT overlay */}
-                <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
-                    <div className="absolute left-0 right-0 h-px bg-gradient-to-b from-transparent via-[rgba(0,210,80,.04)] to-transparent [animation:scanline_6s_linear_infinite]" />
-                    <div className="absolute inset-0 [background-image:repeating-linear-gradient(0deg,transparent,transparent_3px,rgba(0,0,0,.09)_3px,rgba(0,0,0,.09)_4px)]" />
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,transparent_42%,rgba(0,0,0,.55)_100%)]" />
+                <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 10, overflow: 'hidden' }}>
+                    <div style={{
+                        position: 'absolute', left: 0, right: 0, height: '1px',
+                        background: 'linear-gradient(transparent,rgba(0,210,80,.04),transparent)',
+                        animation: 'scanline 6s linear infinite',
+                    }}/>
+                    <div style={{
+                        position: 'absolute', inset: 0,
+                        backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.09) 3px,rgba(0,0,0,.09) 4px)',
+                    }}/>
+                    <div style={{
+                        position: 'absolute', inset: 0,
+                        background: 'radial-gradient(ellipse at 50% 50%,transparent 42%,rgba(0,0,0,.55) 100%)',
+                    }}/>
                 </div>
 
                 {/* ── HEADER ── */}
-                <div className="flex items-center justify-between px-5 py-[11px] border-b border-[rgba(0,210,80,.08)] bg-[rgba(2,5,4,.94)] shrink-0 z-[2]">
+                <div style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    padding: '11px 20px',
+                    borderBottom: '1px solid rgba(0,210,80,.08)',
+                    background: 'rgba(2,5,4,.94)',
+                    flexShrink: 0, zIndex: 2,
+                }}>
                     {/* Identity */}
-                    <div className="flex items-center gap-[13px]">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '13px' }}>
                         {/* Live dot */}
-                        <div className="relative w-2 h-2 shrink-0">
-                            <div className="w-2 h-2 rounded-full bg-[#00d250] shadow-[0_0_6px_#00d250,0_0_16px_rgba(0,210,80,.5)] [animation:pulseGlow_2.8s_ease-in-out_infinite]" />
+                        <div style={{ position: 'relative', width: '8px', height: '8px', flexShrink: 0 }}>
+                            <div style={{
+                                width: '8px', height: '8px', borderRadius: '50%',
+                                background: '#00d250',
+                                boxShadow: '0 0 6px #00d250, 0 0 16px rgba(0,210,80,.5)',
+                                animation: 'pulseGlow 2.8s ease-in-out infinite',
+                            }}/>
                         </div>
                         <div>
-                            <div className="flex items-baseline gap-2">
-                                <span className="font-['Bebas_Neue',cursive] text-[17px] tracking-[.15em] text-[#00d250] [text-shadow:0_0_10px_rgba(0,210,80,.4)]">
-                                    DIGITAL TWIN
+                            <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+                                <span style={{
+                                    fontFamily: "'Bebas Neue',cursive",
+                                    fontSize: '17px', letterSpacing: '.15em',
+                                    color: '#00d250',
+                                    textShadow: '0 0 10px rgba(0,210,80,.4)',
+                                }}>DIGITAL TWIN</span>
+                                <span style={{ fontSize: '8px', color: '#2a6640', letterSpacing: '.08em' }}>
+                                    — Vincent Bommert
                                 </span>
-                                <span className="text-[8px] text-[#2a6640] tracking-[.08em]">— Vincent Bommert</span>
                             </div>
-                            <div className="text-[7px] text-[#2a6640] tracking-[.12em] mt-px">
+                            <div style={{ fontSize: '7px', color: '#2a6640', letterSpacing: '.12em', marginTop: '1px' }}>
                                 LLM · RAG · MULTI-AGENTS · FULLSTACK
                             </div>
                         </div>
                     </div>
 
                     {/* Meta */}
-                    <div className="flex gap-[18px] items-center">
-                        <span className="text-[8px] text-[#2a6640] tracking-[.08em]">
-                            CTX&nbsp;<span className="text-[#00d250]">{messages.length * 2 + 1}K</span>
+                    <div style={{ display: 'flex', gap: '18px', alignItems: 'center' }}>
+                        <span style={{ fontSize: '8px', color: '#2a6640', letterSpacing: '.08em' }}>
+                            CTX&nbsp;<span style={{ color: '#00d250' }}>{messages.length * 2 + 1}K</span>
                         </span>
-                        <span className="text-[8px] text-[#2a6640] tracking-[.06em]">{timeStr}</span>
+                        <span style={{ fontSize: '8px', color: '#2a6640', letterSpacing: '.06em' }}>{timeStr}</span>
                         {sessionId && (
-                            <span className="text-[7px] text-[#2a6640] bg-[rgba(0,210,80,.04)] border border-[rgba(0,210,80,.08)] rounded-sm px-[7px] py-0.5 tracking-[.05em]">
-                                #{sessionId.slice(0, 7).toUpperCase()}
-                            </span>
+                            <span style={{
+                                fontSize: '7px', color: '#2a6640',
+                                background: 'rgba(0,210,80,.04)',
+                                border: '1px solid rgba(0,210,80,.08)',
+                                borderRadius: '2px', padding: '2px 7px', letterSpacing: '.05em',
+                            }}>#{sessionId.slice(0, 7).toUpperCase()}</span>
                         )}
                     </div>
                 </div>
 
                 {/* ── MESSAGES AREA ── */}
-                <div className="flex-1 overflow-y-auto px-[22px] py-5 flex flex-col z-[2]">
+                <div style={{
+                    flex: 1, overflowY: 'auto',
+                    padding: '20px 22px',
+                    display: 'flex', flexDirection: 'column',
+                    zIndex: 2,
+                }}>
 
                     {/* ── BOOT ── */}
                     {!bootDone ? (
-                        <div className="text-[10px] leading-[2.2]">
+                        <div style={{ fontSize: '10px', lineHeight: 2.2 }}>
                             {([
                                 ['> INITIALIZING AI DIGITAL TWIN...', '#3a7a50', false],
                                 ['> LOADING LLM CONTEXT WINDOW.............. OK', '#3a7a50', false],
@@ -251,15 +306,12 @@ export default function Twin() {
                                 ['> CONNECTING TO NOVA MODELS.............. OK', '#4a9060', false],
                                 ['> ALL SYSTEMS OPERATIONAL.', '#00d250', true],
                             ] as [string, string, boolean][]).map(([line, color, glow], i) => (
-                                <div
-                                    key={String(line)}
-                                    style={{
-                                        animation: `bootLine .22s ${i * 220}ms ease both`,
-                                        opacity: 0,
-                                        color,
-                                        textShadow: glow ? '0 0 10px rgba(0,210,80,.4)' : undefined,
-                                    }}
-                                >
+                                <div key={String(line)} style={{
+                                    animation: `bootLine .22s ${i * 220}ms ease both`,
+                                    opacity: 0,
+                                    color,
+                                    textShadow: glow ? '0 0 10px rgba(0,210,80,.4)' : undefined,
+                                }}>
                                     {line}
                                 </div>
                             ))}
@@ -268,35 +320,54 @@ export default function Twin() {
                     ) : messages.length === 0 ? (
 
                         /* ── EMPTY STATE ── */
-                        <div className="[animation:msgIn_.4s_ease_both]">
+                        <div style={{ animation: 'msgIn .4s ease both' }}>
 
                             {/* Greeting card */}
-                            <div className="mb-5 px-[18px] py-[14px] bg-[rgba(0,210,80,.025)] border border-[rgba(0,210,80,.09)] border-l-2 border-l-[rgba(0,210,80,.6)] rounded-r-[3px]">
-                                <p className="text-[#00b844] text-[13px] m-0 mb-[5px] font-normal leading-[1.5]">
+                            <div style={{
+                                marginBottom: '20px',
+                                padding: '14px 18px',
+                                background: 'rgba(0,210,80,.025)',
+                                border: '1px solid rgba(0,210,80,.09)',
+                                borderLeft: '2px solid rgba(0,210,80,.6)',
+                                borderRadius: '0 3px 3px 0',
+                            }}>
+                                <p style={{ color: '#00b844', fontSize: '13px', margin: '0 0 5px', fontWeight: 400, lineHeight: 1.5 }}>
                                     Bonjour — je suis le Digital Twin de{' '}
-                                    <span className="text-[#00d250] font-medium [text-shadow:0_0_6px_rgba(0,210,80,.3)]">
+                                    <span style={{ color: '#00d250', fontWeight: 500, textShadow: '0 0 6px rgba(0,210,80,.3)' }}>
                                         Vincent Bommert
                                     </span>.
                                 </p>
-                                <p className="text-[#3a8050] text-[10px] m-0 font-light italic leading-[1.6]">
+                                <p style={{ color: '#3a8050', fontSize: '10px', margin: 0, fontWeight: 300, fontStyle: 'italic', lineHeight: 1.6 }}>
                                     Mes expériences en LLM, RAG et production cloud sont chargées en contexte.
                                 </p>
                             </div>
 
-                            <div className="flex items-center gap-[10px] mb-3">
-                                <div className="flex-1 h-px bg-[rgba(0,210,80,.06)]" />
-                                <span className="text-[7px] text-[#2a6640] tracking-[.14em]">SUGGESTIONS</span>
-                                <div className="flex-1 h-px bg-[rgba(0,210,80,.06)]" />
+                            <div style={{
+                                display: 'flex', alignItems: 'center', gap: '10px',
+                                margin: '0 0 12px',
+                            }}>
+                                <div style={{ flex: 1, height: '1px', background: 'rgba(0,210,80,.06)' }}/>
+                                <span style={{ fontSize: '7px', color: '#2a6640', letterSpacing: '.14em' }}>SUGGESTIONS</span>
+                                <div style={{ flex: 1, height: '1px', background: 'rgba(0,210,80,.06)' }}/>
                             </div>
 
-                            <div className="flex flex-col gap-[5px]">
+                            {/* Suggestions — clean single column, not grid */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                                 {SUGGESTIONS.map(p => (
-                                    <button
-                                        key={p}
-                                        className="sug-btn bg-transparent border border-[rgba(0,210,80,.09)] border-l-2 border-l-[rgba(0,210,80,.3)] rounded-r-sm px-3 py-[7px] cursor-pointer text-left font-['IBM_Plex_Mono',monospace] text-[11px] text-[#3a8050] font-light leading-[1.4] transition-all duration-150"
-                                        onClick={() => setInput(p)}
-                                    >
-                                        <span className="text-[#2a6640] mr-[6px]">›</span>
+                                    <button key={p} className="sug-btn" onClick={() => setInput(p)} style={{
+                                        background: 'transparent',
+                                        border: '1px solid rgba(0,210,80,.09)',
+                                        borderLeft: '2px solid rgba(0,210,80,.3)',
+                                        borderRadius: '0 2px 2px 0',
+                                        padding: '7px 12px',
+                                        cursor: 'pointer',
+                                        textAlign: 'left',
+                                        fontFamily: "'IBM Plex Mono',monospace",
+                                        fontSize: '11px', color: '#3a8050',
+                                        fontWeight: 300, lineHeight: 1.4,
+                                        transition: 'all .15s',
+                                    }}>
+                                        <span style={{ color: '#2a6640', marginRight: '6px' }}>›</span>
                                         {p}
                                     </button>
                                 ))}
@@ -308,43 +379,58 @@ export default function Twin() {
                         /* ── MESSAGES ── */
                         <>
                             {messages.map((msg, idx) => (
-                                <div key={msg.id} className="msg-in mb-4">
+                                <div key={msg.id} className="msg-in" style={{ marginBottom: '16px' }}>
                                     {msg.role === 'user' ? (
                                         <div>
-                                            <div className="flex items-center gap-[9px] mb-[3px]">
-                                                <span className="text-[7px] text-[#3a8050] tracking-[.12em] font-medium">VOUS</span>
-                                                <span className="text-[7px] text-[#2a6640] tracking-[.06em]">
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '9px', marginBottom: '3px' }}>
+                                                <span style={{ fontSize: '7px', color: '#3a8050', letterSpacing: '.12em', fontWeight: 500 }}>VOUS</span>
+                                                <span style={{ fontSize: '7px', color: '#2a6640', letterSpacing: '.06em' }}>
                                                     {msg.timestamp.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                                                 </span>
                                             </div>
-                                            <div className="pl-[13px] border-l-2 border-l-[rgba(0,210,80,.22)] text-[#2ecc5a] text-[13px] leading-[1.68] font-light">
+                                            <div style={{
+                                                paddingLeft: '13px',
+                                                borderLeft: '2px solid rgba(0,210,80,.22)',
+                                                color: '#2ecc5a',
+                                                fontSize: '13px', lineHeight: 1.68, fontWeight: 300,
+                                            }}>
                                                 {msg.content}
                                             </div>
                                         </div>
                                     ) : (
                                         <div>
-                                            <div className="flex items-center gap-[10px] mb-[5px]">
-                                                <span className="text-[7px] text-[#00d250] tracking-[.12em] font-medium [text-shadow:0_0_5px_rgba(0,210,80,.3)]">
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '5px' }}>
+                                                <span style={{ fontSize: '7px', color: '#00d250', letterSpacing: '.12em', fontWeight: 500, textShadow: '0 0 5px rgba(0,210,80,.3)' }}>
                                                     V.BOMMERT
                                                 </span>
-                                                <span className="text-[7px] text-[#2a6640] tracking-[.06em]">
+                                                <span style={{ fontSize: '7px', color: '#2a6640', letterSpacing: '.06em' }}>
                                                     {msg.timestamp.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                                                 </span>
-                                                <span className="text-[7px] text-[#2a6640] ml-auto tracking-[.05em]">
+                                                <span style={{ fontSize: '7px', color: '#2a6640', marginLeft: 'auto', letterSpacing: '.05em' }}>
                                                     MSG_{String(idx).padStart(3, '0')}
                                                 </span>
                                                 <button
                                                     onClick={() => copyMessage(msg.content, msg.id)}
-                                                    className={`rounded-sm cursor-pointer text-[7px] tracking-[.08em] font-['IBM_Plex_Mono',monospace] transition-all duration-150 px-[7px] py-0.5 ${
-                                                        copied === msg.id
-                                                            ? 'bg-[rgba(0,210,80,.15)] border border-[rgba(0,210,80,.5)] text-[#00d250]'
-                                                            : 'bg-[rgba(0,210,80,.06)] border border-[rgba(0,210,80,.25)] text-[#5aaa70]'
-                                                    }`}
+                                                    style={{
+                                                        background: copied === msg.id ? 'rgba(0,210,80,.15)' : 'rgba(0,210,80,.06)',
+                                                        border: `1px solid ${copied === msg.id ? 'rgba(0,210,80,.5)' : 'rgba(0,210,80,.25)'}`,
+                                                        borderRadius: '2px', cursor: 'pointer',
+                                                        fontSize: '7px', color: copied === msg.id ? '#00d250' : '#5aaa70',
+                                                        letterSpacing: '.08em', fontFamily: "'IBM Plex Mono',monospace",
+                                                        transition: 'all .15s', padding: '2px 7px',
+                                                    }}
                                                 >
                                                     {copied === msg.id ? 'COPIÉ ✓' : 'COPIER'}
                                                 </button>
                                             </div>
-                                            <div className="bg-gradient-to-br from-[rgba(0,210,80,.04)] to-[rgba(0,210,80,.015)] border border-[rgba(0,210,80,.1)] border-l-2 border-l-[rgba(0,210,80,.6)] px-4 py-3 rounded-r-[3px] shadow-[0_2px_18px_rgba(0,0,0,.22)]">
+                                            <div style={{
+                                                background: 'linear-gradient(135deg,rgba(0,210,80,.04) 0%,rgba(0,210,80,.015) 100%)',
+                                                border: '1px solid rgba(0,210,80,.1)',
+                                                borderLeft: '2px solid rgba(0,210,80,.6)',
+                                                padding: '12px 16px',
+                                                borderRadius: '0 3px 3px 0',
+                                                boxShadow: '0 2px 18px rgba(0,0,0,.22)',
+                                            }}>
                                                 {idx === messages.length - 1 && msg.role === 'assistant'
                                                     ? <TypedText text={msg.content} />
                                                     : <MarkdownContent content={msg.content} />
@@ -357,18 +443,22 @@ export default function Twin() {
 
                             {/* Loading bar-wave */}
                             {isLoading && (
-                                <div className="mb-4">
-                                    <div className="text-[7px] text-[#00d250] tracking-[.1em] mb-[7px]">
+                                <div style={{ marginBottom: '16px' }}>
+                                    <div style={{ fontSize: '7px', color: '#00d250', letterSpacing: '.1em', marginBottom: '7px' }}>
                                         V.BOMMERT&nbsp;
-                                        <span className="text-[#2a6640]">— GÉNÉRATION...</span>
+                                        <span style={{ color: '#2a6640' }}>— GÉNÉRATION...</span>
                                     </div>
-                                    <div className="flex gap-[3px] items-center h-5 pl-[13px]">
+                                    <div style={{
+                                        display: 'flex', gap: '3px', alignItems: 'center',
+                                        height: '20px', paddingLeft: '13px',
+                                    }}>
                                         {Array.from({ length: 20 }).map((_, i) => (
-                                            <div
-                                                key={i}
-                                                className="w-0.5 h-5 bg-[rgba(0,210,80,.45)] rounded-sm origin-center"
-                                                style={{ animation: `barWave .88s ${i * 42}ms ease-in-out infinite` }}
-                                            />
+                                            <div key={i} style={{
+                                                width: '2px', height: '20px',
+                                                background: 'rgba(0,210,80,.45)',
+                                                borderRadius: '1px', transformOrigin: 'center',
+                                                animation: `barWave .88s ${i * 42}ms ease-in-out infinite`,
+                                            }}/>
                                         ))}
                                     </div>
                                 </div>
@@ -376,39 +466,66 @@ export default function Twin() {
                         </>
                     )}
 
-                    <div ref={messagesEndRef} />
+                    <div ref={messagesEndRef}/>
                 </div>
 
                 {/* ── INPUT ── */}
-                <div className="border-t border-[rgba(0,210,80,.07)] px-[18px] py-3 bg-[rgba(2,4,3,.96)] shrink-0 z-[2]">
-                    <div className="input-wrap flex items-center gap-[10px] bg-[rgba(0,210,80,.025)] border border-[rgba(0,210,80,.09)] rounded-[3px] px-3 py-[9px] transition-[border-color,box-shadow] duration-200">
-                        <span className="text-[11px] text-[#00d250] [text-shadow:0_0_5px_rgba(0,210,80,.5)] font-medium shrink-0 tracking-[.04em]">~$</span>
+                <div style={{
+                    borderTop: '1px solid rgba(0,210,80,.07)',
+                    padding: '12px 18px',
+                    background: 'rgba(2,4,3,.96)',
+                    flexShrink: 0, zIndex: 2,
+                }}>
+                    <div className="input-wrap" style={{
+                        display: 'flex', alignItems: 'center', gap: '10px',
+                        background: 'rgba(0,210,80,.025)',
+                        border: '1px solid rgba(0,210,80,.09)',
+                        borderRadius: '3px', padding: '9px 12px',
+                        transition: 'border-color .2s, box-shadow .2s',
+                    }}>
+                        <span style={{
+                            fontSize: '11px', color: '#00d250',
+                            textShadow: '0 0 5px rgba(0,210,80,.5)',
+                            fontWeight: 500, flexShrink: 0, letterSpacing: '.04em',
+                        }}>~$</span>
                         <input
-                            type="text"
-                            value={input}
+                            type="text" value={input}
                             onChange={e => setInput(e.target.value)}
                             onKeyDown={handleKeyPress}
                             placeholder="posez votre question..."
                             disabled={isLoading || !bootDone}
-                            className="twin-input flex-1 bg-transparent border-none outline-none text-[#00d250] text-[12px] font-['IBM_Plex_Mono',monospace] font-light caret-[#00d250] tracking-[.02em]"
+                            style={{
+                                flex: 1, background: 'transparent',
+                                border: 'none', outline: 'none',
+                                color: '#00d250', fontSize: '12px',
+                                fontFamily: "'IBM Plex Mono',monospace",
+                                fontWeight: 300, caretColor: '#00d250', letterSpacing: '.02em',
+                            }}
                         />
                         <button
                             onClick={sendMessage}
                             disabled={!input.trim() || isLoading || !bootDone}
-                            className={`send-btn rounded-sm px-[14px] py-[5px] flex items-center gap-[5px] transition-all duration-150 text-[8px] font-['IBM_Plex_Mono',monospace] tracking-[.12em] font-medium ${
-                                input.trim() && !isLoading
-                                    ? 'bg-[rgba(0,210,80,.1)] border border-[rgba(0,210,80,.3)] text-[#00d250] cursor-pointer'
-                                    : 'bg-transparent border border-[rgba(0,210,80,.05)] text-[#3a7a50] cursor-not-allowed'
-                            }`}
+                            className="send-btn"
+                            style={{
+                                background: input.trim() && !isLoading ? 'rgba(0,210,80,.1)' : 'transparent',
+                                border: `1px solid ${input.trim() && !isLoading ? 'rgba(0,210,80,.3)' : 'rgba(0,210,80,.05)'}`,
+                                borderRadius: '2px', padding: '5px 14px',
+                                cursor: input.trim() && !isLoading ? 'pointer' : 'not-allowed',
+                                display: 'flex', alignItems: 'center', gap: '5px',
+                                transition: 'all .15s',
+                                color: input.trim() && !isLoading ? '#00d250' : '#3a7a50',
+                                fontSize: '8px', fontFamily: "'IBM Plex Mono',monospace",
+                                letterSpacing: '.12em', fontWeight: 500,
+                            }}
                         >
-                            ENVOYER <Send size={8} />
+                            ENVOYER <Send size={8}/>
                         </button>
                     </div>
 
-                    <div className="mt-[7px] flex gap-3">
-                        <span className="text-[7px] text-[#5aaa70] tracking-[.08em]">↵ ENVOYER</span>
-                        <span className="text-[7px] text-[#3a7a50] tracking-[.08em]">↑↓ HISTORIQUE</span>
-                        <span className="text-[7px] text-[#3a7a50] tracking-[.08em]">ESC EFFACER</span>
+                    <div style={{ marginTop: '7px', display: 'flex', gap: '12px' }}>
+                        <span style={{ fontSize: '7px', color: '#5aaa70', letterSpacing: '.08em' }}>↵ ENVOYER</span>
+                        <span style={{ fontSize: '7px', color: '#3a7a50', letterSpacing: '.08em' }}>↑↓ HISTORIQUE</span>
+                        <span style={{ fontSize: '7px', color: '#3a7a50', letterSpacing: '.08em' }}>ESC EFFACER</span>
                     </div>
                 </div>
 
