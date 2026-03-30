@@ -79,10 +79,12 @@ if ($Environment -eq "prod" -and (Test-Path "prod.tfvars")) {
     terraform destroy -var-file=prod.tfvars `
                      -var="project_name=$ProjectName" `
                      -var="environment=$Environment" `
+                     -var="github_repository=$GithubRepository" `
                      -auto-approve
 } else {
     terraform destroy -var="project_name=$ProjectName" `
                      -var="environment=$Environment" `
+                     -var="github_repository=$GithubRepository" `
                      -auto-approve
 }
 

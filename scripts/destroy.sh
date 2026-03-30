@@ -81,9 +81,16 @@ fi
 
 # Run terraform destroy with auto-approve
 if [ "$ENVIRONMENT" = "prod" ] && [ -f "prod.tfvars" ]; then
-    terraform destroy -var-file=prod.tfvars -var="project_name=$PROJECT_NAME" -var="environment=$ENVIRONMENT" -auto-approve
+    terraform destroy -var-file=prod.tfvars \
+                     -var="project_name=$PROJECT_NAME" \
+                     -var="environment=$ENVIRONMENT" \
+                     -var="github_repository=$GITHUB_REPOSITORY" \
+                     -auto-approve
 else
-    terraform destroy -var="project_name=$PROJECT_NAME" -var="environment=$ENVIRONMENT" -auto-approve
+    terraform destroy -var="project_name=$PROJECT_NAME" \
+                     -var="environment=$ENVIRONMENT" \
+                     -var="github_repository=$GITHUB_REPOSITORY" \
+                     -auto-approve
 fi
 
 # Re-import global IAM resources into state so next deployment works seamlessly
