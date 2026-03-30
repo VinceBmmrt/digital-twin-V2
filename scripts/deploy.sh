@@ -69,6 +69,28 @@ else
   terraform workspace select "$ENVIRONMENT"
 fi
 
+# ✅ Import global IAM resources if they exist in AWS but not in state
+# These resources are global and never deleted from AWS, even after a destroy
+echo "🔁 Importing global IAM resources if needed..."
+TF_IMPORT_VARS="-var=project_name=$PROJECT_NAME -var=environment=$ENVIRONMENT -var=github_repository=$GITHUB_REPOSITORY"
+
+import_if_missing() {
+  RESOURCE=$1
+  ID=$2
+  if ! terraform state list | grep -q "^${RESOURCE}$"; then
+    echo "  → Importing ${RESOURCE}..."
+    terraform import $TF_IMPORT_VARS "$RESOURCE" "$ID" 2>/dev/null || true
+  else
+    echo "  ✅ ${RESOURCE} already in state"
+  fi
+}
+
+import_if_missing "aws_iam_openid_connect_provider.github" \
+  "arn:aws:iam::${AWS_ACCOUNT_ID}:oidc-provider/token.actions.githubusercontent.com"
+
+import_if_missing "aws_iam_role.github_actions" \
+  "github-actions-twin-deploy"
+
 # ✅ Toutes les vars communes incluant github_repository
 TF_COMMON_VARS=(
   -var="project_name=$PROJECT_NAME"
