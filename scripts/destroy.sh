@@ -43,11 +43,21 @@ fi
 # Select the workspace
 terraform workspace select "$ENVIRONMENT"
 
-# Remove global IAM resources from state before destroy
-# These resources are shared across all environments and must not be deleted from AWS
+# Remove global IAM resources from state — they are shared across all environments
+# and must never be destroyed. They will be re-imported after destroy if needed.
 echo "🔓 Removing global IAM resources from state (they will NOT be deleted from AWS)..."
 terraform state rm aws_iam_openid_connect_provider.github 2>/dev/null || true
 terraform state rm aws_iam_role.github_actions 2>/dev/null || true
+terraform state rm aws_iam_role_policy.github_additional 2>/dev/null || true
+terraform state rm aws_iam_role_policy_attachment.github_lambda 2>/dev/null || true
+terraform state rm aws_iam_role_policy_attachment.github_s3 2>/dev/null || true
+terraform state rm aws_iam_role_policy_attachment.github_apigateway 2>/dev/null || true
+terraform state rm aws_iam_role_policy_attachment.github_cloudfront 2>/dev/null || true
+terraform state rm aws_iam_role_policy_attachment.github_iam_read 2>/dev/null || true
+terraform state rm aws_iam_role_policy_attachment.github_bedrock 2>/dev/null || true
+terraform state rm aws_iam_role_policy_attachment.github_dynamodb 2>/dev/null || true
+terraform state rm aws_iam_role_policy_attachment.github_acm 2>/dev/null || true
+terraform state rm aws_iam_role_policy_attachment.github_route53 2>/dev/null || true
 
 echo "📦 Emptying S3 buckets..."
 
@@ -92,22 +102,6 @@ else
                      -var="github_repository=$GITHUB_REPOSITORY" \
                      -auto-approve
 fi
-
-# Re-import global IAM resources into state so next deployment works seamlessly
-echo "🔁 Re-importing global IAM resources into state..."
-terraform import \
-  -var="github_repository=$GITHUB_REPOSITORY" \
-  -var="project_name=$PROJECT_NAME" \
-  -var="environment=$ENVIRONMENT" \
-  aws_iam_openid_connect_provider.github \
-  arn:aws:iam::${AWS_ACCOUNT_ID}:oidc-provider/token.actions.githubusercontent.com 2>/dev/null || true
-
-terraform import \
-  -var="github_repository=$GITHUB_REPOSITORY" \
-  -var="project_name=$PROJECT_NAME" \
-  -var="environment=$ENVIRONMENT" \
-  aws_iam_role.github_actions \
-  github-actions-twin-deploy 2>/dev/null || true
 
 echo "✅ Infrastructure for ${ENVIRONMENT} has been destroyed!"
 echo ""

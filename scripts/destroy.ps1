@@ -42,11 +42,26 @@ if (-not ($workspaces | Select-String $Environment)) {
 # Select the workspace
 terraform workspace select $Environment
 
-# Remove global IAM resources from state before destroy
-# These resources are shared across all environments and must not be deleted from AWS
+# Remove global IAM resources from state — they are shared across all environments
+# and must never be destroyed. They will be re-imported on next deployment if needed.
 Write-Host "Removing global IAM resources from state (they will NOT be deleted from AWS)..." -ForegroundColor Yellow
-terraform state rm aws_iam_openid_connect_provider.github 2>$null
-terraform state rm aws_iam_role.github_actions 2>$null
+$resourcesToRemove = @(
+    "aws_iam_openid_connect_provider.github",
+    "aws_iam_role.github_actions",
+    "aws_iam_role_policy.github_additional",
+    "aws_iam_role_policy_attachment.github_lambda",
+    "aws_iam_role_policy_attachment.github_s3",
+    "aws_iam_role_policy_attachment.github_apigateway",
+    "aws_iam_role_policy_attachment.github_cloudfront",
+    "aws_iam_role_policy_attachment.github_iam_read",
+    "aws_iam_role_policy_attachment.github_bedrock",
+    "aws_iam_role_policy_attachment.github_dynamodb",
+    "aws_iam_role_policy_attachment.github_acm",
+    "aws_iam_role_policy_attachment.github_route53"
+)
+foreach ($resource in $resourcesToRemove) {
+    terraform state rm $resource 2>$null
+}
 
 Write-Host "Emptying S3 buckets..." -ForegroundColor Yellow
 
@@ -87,23 +102,6 @@ if ($Environment -eq "prod" -and (Test-Path "prod.tfvars")) {
                      -var="github_repository=$GithubRepository" `
                      -auto-approve
 }
-
-# Re-import global IAM resources into state so next deployment works seamlessly
-Write-Host "Re-importing global IAM resources into state..." -ForegroundColor Yellow
-
-terraform import `
-  -var="github_repository=$GithubRepository" `
-  -var="project_name=$ProjectName" `
-  -var="environment=$Environment" `
-  aws_iam_openid_connect_provider.github `
-  "arn:aws:iam::${awsAccountId}:oidc-provider/token.actions.githubusercontent.com"
-
-terraform import `
-  -var="github_repository=$GithubRepository" `
-  -var="project_name=$ProjectName" `
-  -var="environment=$Environment" `
-  aws_iam_role.github_actions `
-  "github-actions-twin-deploy"
 
 Write-Host "Infrastructure for $Environment has been destroyed!" -ForegroundColor Green
 Write-Host ""
