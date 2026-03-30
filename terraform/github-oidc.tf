@@ -75,46 +75,55 @@ resource "aws_iam_role" "github_actions" {
 resource "aws_iam_role_policy_attachment" "github_lambda" {
   policy_arn = "arn:aws:iam::aws:policy/AWSLambda_FullAccess"
   role       = aws_iam_role.github_actions.name
+  lifecycle { prevent_destroy = true }
 }
 
 resource "aws_iam_role_policy_attachment" "github_s3" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
   role       = aws_iam_role.github_actions.name
+  lifecycle { prevent_destroy = true }
 }
 
 resource "aws_iam_role_policy_attachment" "github_apigateway" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonAPIGatewayAdministrator"
   role       = aws_iam_role.github_actions.name
+  lifecycle { prevent_destroy = true }
 }
 
 resource "aws_iam_role_policy_attachment" "github_cloudfront" {
   policy_arn = "arn:aws:iam::aws:policy/CloudFrontFullAccess"
   role       = aws_iam_role.github_actions.name
+  lifecycle { prevent_destroy = true }
 }
 
 resource "aws_iam_role_policy_attachment" "github_iam_read" {
   policy_arn = "arn:aws:iam::aws:policy/IAMReadOnlyAccess"
   role       = aws_iam_role.github_actions.name
+  lifecycle { prevent_destroy = true }
 }
 
 resource "aws_iam_role_policy_attachment" "github_bedrock" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonBedrockFullAccess"
   role       = aws_iam_role.github_actions.name
+  lifecycle { prevent_destroy = true }
 }
 
 resource "aws_iam_role_policy_attachment" "github_dynamodb" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
   role       = aws_iam_role.github_actions.name
+  lifecycle { prevent_destroy = true }
 }
 
 resource "aws_iam_role_policy_attachment" "github_acm" {
   policy_arn = "arn:aws:iam::aws:policy/AWSCertificateManagerFullAccess"
   role       = aws_iam_role.github_actions.name
+  lifecycle { prevent_destroy = true }
 }
 
 resource "aws_iam_role_policy_attachment" "github_route53" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonRoute53FullAccess"
   role       = aws_iam_role.github_actions.name
+  lifecycle { prevent_destroy = true }
 }
 
 # Custom policy for additional permissions
@@ -158,6 +167,8 @@ resource "aws_iam_role_policy" "github_additional" {
       }
     ]
   })
+
+  lifecycle { prevent_destroy = true }
 }
 
 output "github_actions_role_arn" {
