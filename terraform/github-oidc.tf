@@ -23,6 +23,13 @@ resource "aws_iam_openid_connect_provider" "github" {
   thumbprint_list = [
     "1b511abead59c6ce207077c0bf0e0043b1382612"
   ]
+
+  # Prevents accidental destruction and ignores drift — this resource is global
+  # and shared across all environments (dev/test/prod). Never recreate it.
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes  = all
+  }
 }
 
 # IAM Role for GitHub Actions
@@ -54,6 +61,13 @@ resource "aws_iam_role" "github_actions" {
     Name        = "GitHub Actions Deploy Role"
     Repository  = var.github_repository
     ManagedBy   = "terraform"
+  }
+
+  # Prevents accidental destruction — this role is global and used by all
+  # GitHub Actions deployments. Losing it breaks all pipelines.
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes  = [assume_role_policy, tags]
   }
 }
 
@@ -104,8 +118,6 @@ resource "aws_iam_role_policy_attachment" "github_route53" {
 }
 
 # Custom policy for additional permissions
-
-
 resource "aws_iam_role_policy" "github_additional" {
   name = "github-actions-additional"
   role = aws_iam_role.github_actions.id
@@ -141,6 +153,7 @@ resource "aws_iam_role_policy" "github_additional" {
     ]
   })
 }
+
 output "github_actions_role_arn" {
   value = aws_iam_role.github_actions.arn
 }
