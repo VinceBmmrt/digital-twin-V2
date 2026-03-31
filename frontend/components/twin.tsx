@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import BootAnimation from "../components/BootAnimation";
@@ -8,35 +8,38 @@ import WelcomeScreen from "../components/WelcomeScreen";
 import MessageList from "../components/MessageList";
 import InputBar from "../components/InputBar";
 import BackgroundEffects from "../components/BackgroundEffects";
-import { Message } from "../types/types";
 import GlobalStyles from "@/css/twinStyle";
+import { useChatSession } from "@/hooks/useChatSession";
+import { useBoot } from "@/hooks/useBoot";
 
 export default function Twin() {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [sessionId, setSessionId] = useState("");
-  const [bootDone, setBootDone] = useState(false);
-  const [copied, setCopied] = useState<string | null>(null);
-  const [inputHistory, setInputHistory] = useState<string[]>([]);
-  const [historyIdx, setHistoryIdx] = useState(-1);
   const [inputFocused, setInputFocused] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [copied, setCopied] = useState<string | null>(null);
+
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  const { bootDone, timeStr } = useBoot();
+  const {
+    messages,
+    input,
+    isLoading,
+    sessionId,
+    handleKey,
+    sendMessage,
+    setInput,
+  } = useChatSession();
+
+  // Auto-scroll on new messages
   useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+    scrollRef.current?.scrollTo({
+      top: scrollRef.current.scrollHeight,
+      behavior: "smooth",
+    });
   }, [messages.length]);
 
-  useEffect(() => {
-    const t = setTimeout(() => setBootDone(true), 2200);
-    return () => clearTimeout(t);
-  }, []);
-
-  // Close sidebar on resize to desktop
+  // Close sidebar when resizing to desktop
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 769px)");
     const handler = (e: MediaQueryListEvent) => {
@@ -52,151 +55,24 @@ export default function Twin() {
     setTimeout(() => setCopied(null), 2000);
   };
 
-  const sendMessage = useCallback(
-    async (msg?: string) => {
-      const text = msg ?? input;
-      if (!text.trim() || isLoading) return;
-      setInputHistory((prev) => [text, ...prev.slice(0, 19)]);
-      setHistoryIdx(-1);
-      const userMsg: Message = {
-        id: Date.now().toString(),
-        role: "user",
-        content: text,
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, userMsg]);
-      setInput("");
-      setIsLoading(true);
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/chat`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              message: text,
-              session_id: sessionId || undefined,
-            }),
-          },
-        );
-        if (!res.ok) {
-          let d = `Erreur ${res.status}`;
-          try {
-            const e = await res.json();
-            if (e?.detail) d = String(e.detail);
-          } catch {}
-          throw new Error(d);
-        }
-        const data = await res.json();
-        if (!sessionId) setSessionId(data.session_id);
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: (Date.now() + 1).toString(),
-            role: "assistant",
-            content: data.response,
-            timestamp: new Date(),
-          },
-        ]);
-      } catch (err) {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: (Date.now() + 1).toString(),
-            role: "assistant",
-            content: `Une erreur est survenue : ${err instanceof Error ? err.message : "Erreur inconnue"}`,
-            timestamp: new Date(),
-          },
-        ]);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [input, isLoading, sessionId],
-  );
-
-  const handleKey = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      const n = Math.min(historyIdx + 1, inputHistory.length - 1);
-      setHistoryIdx(n);
-      setInput(inputHistory[n] ?? "");
-    }
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      const n = Math.max(historyIdx - 1, -1);
-      setHistoryIdx(n);
-      setInput(n === -1 ? "" : inputHistory[n]);
-    }
-    if (e.key === "Escape") {
-      setInput("");
-      setHistoryIdx(-1);
-    }
-  };
-
-  const [timeStr, setTimeStr] = useState("");
-  useEffect(() => {
-    const u = () =>
-      setTimeStr(
-        new Date().toLocaleTimeString("fr-FR", {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-      );
-    u();
-    const iv = setInterval(u, 1000);
-    return () => clearInterval(iv);
-  }, []);
-
   const isEmpty = messages.length === 0;
 
   return (
-    <div
-      style={{
-        position: "absolute",
-        inset: 0,
-        fontFamily: "DM Mono, monospace",
-        overflow: "hidden",
-      }}
-    >
+    <div className="twin-root">
       <GlobalStyles />
 
-      {/* Sidebar overlay backdrop (mobile only) */}
+      {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
-        <div
-          onClick={() => setSidebarOpen(false)}
-          style={{
-            position: "absolute",
-            inset: 0,
-            zIndex: 30,
-            background: "rgba(0,0,0,.55)",
-            backdropFilter: "blur(2px)",
-          }}
-        />
+        <div className="twin-backdrop" onClick={() => setSidebarOpen(false)} />
       )}
 
-      {/* Root flex container */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          display: "flex",
-          width: "100%",
-          height: "100%",
-          background: "#08131f",
-          overflow: "hidden",
-        }}
-      >
-        {/* Neural BG */}
-        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+      <div className="twin-layout">
+        {/* Neural background */}
+        <div className="twin-bg">
           <BackgroundEffects />
         </div>
 
-        {/* Sidebar — always rendered, CSS controls visibility/position */}
+        {/* Sidebar */}
         <div
           className={`twin-sidebar${sidebarOpen ? " twin-sidebar--open" : ""}`}
         >
@@ -207,34 +83,11 @@ export default function Twin() {
           />
         </div>
 
-        {/* Main content */}
-        <main
-          style={{
-            flex: 1,
-            minWidth: 0,
-            minHeight: 0,
-            display: "flex",
-            flexDirection: "column",
-            position: "relative",
-            zIndex: 10,
-            background: "rgba(10,20,36,.55)",
-            overflow: "hidden",
-          }}
-        >
+        {/* Main */}
+        <main className="twin-main">
           <Header onMenuClick={() => setSidebarOpen((o) => !o)} />
 
-          {/* Messages scroll area */}
-          <div
-            ref={scrollRef}
-            style={{
-              flex: 1,
-              minHeight: 0,
-              overflowY: "auto",
-              overflowX: "hidden",
-              padding: "28px 32px",
-            }}
-            className="scroll-area twin-scroll-area"
-          >
+          <div ref={scrollRef} className="twin-scroll-area scroll-area">
             {!bootDone && <BootAnimation />}
 
             {bootDone && isEmpty && (
