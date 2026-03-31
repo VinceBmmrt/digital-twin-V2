@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 export default function GlobalStyles() {
   return (
@@ -17,30 +17,30 @@ export default function GlobalStyles() {
       @keyframes orbFloat    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
       @keyframes rotate360   { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
       @keyframes chatAura    {
-          0%,100% { box-shadow: 0 0 0 1px rgba(99,179,255,.06), 0 0 40px rgba(99,179,255,.05); }
-          50%     { box-shadow: 0 0 0 1px rgba(99,179,255,.12), 0 0 60px rgba(99,179,255,.09); }
+        0%,100% { box-shadow: 0 0 0 1px rgba(99,179,255,.06), 0 0 40px rgba(99,179,255,.05); }
+        50%     { box-shadow: 0 0 0 1px rgba(99,179,255,.12), 0 0 60px rgba(99,179,255,.09); }
       }
 
       .msg-in   { animation: msgIn .3s cubic-bezier(.22,.68,0,1.2) both; }
       .fade-up  { animation: fadeUp .5s ease both; }
 
       .shimmer-text {
-          background: linear-gradient(90deg, #63b3ff 0%, #c8e8ff 38%, #fff 48%, #93d0ff 58%, #63b3ff 100%);
-          background-size: 200% auto;
-          -webkit-background-clip: text; background-clip: text;
-          -webkit-text-fill-color: transparent;
-          animation: shimmer 4s linear infinite;
+        background: linear-gradient(90deg, #63b3ff 0%, #c8e8ff 38%, #fff 48%, #93d0ff 58%, #63b3ff 100%);
+        background-size: 200% auto;
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shimmer 4s linear infinite;
       }
       .glass-msg {
-          background: linear-gradient(135deg, rgba(99,179,255,.07) 0%, rgba(99,179,255,.03) 100%);
-          border: 1px solid rgba(99,179,255,.14);
-          backdrop-filter: blur(12px);
+        background: linear-gradient(135deg, rgba(99,179,255,.07) 0%, rgba(99,179,255,.03) 100%);
+        border: 1px solid rgba(99,179,255,.14);
+        backdrop-filter: blur(12px);
       }
       .sug-card {
-          background: rgba(255,255,255,.025);
-          border: 1px solid rgba(99,179,255,.1);
-          transition: all .2s cubic-bezier(.22,.68,0,1.2);
-          cursor: pointer;
+        background: rgba(255,255,255,.025);
+        border: 1px solid rgba(99,179,255,.1);
+        transition: all .2s cubic-bezier(.22,.68,0,1.2);
+        cursor: pointer;
       }
       .sug-card:hover { background: rgba(99,179,255,.08); border-color: rgba(99,179,255,.3); transform: translateY(-1px); }
 
@@ -62,6 +62,116 @@ export default function GlobalStyles() {
       .status-dot  { animation: glowPulse 2s ease-in-out infinite; }
       .orb1 { animation: orbFloat 7s ease-in-out infinite; }
       .orb2 { animation: orbFloat 9s ease-in-out infinite; animation-delay: -4s; }
+
+      /* ─────────────────────────────────────────
+         SIDEBAR RESPONSIVE WRAPPER
+         Desktop (>768px): static, always visible.
+         Tablet / Mobile (≤768px): slides in from
+         left as a fixed overlay, z-index 40.
+      ───────────────────────────────────────── */
+      .twin-sidebar {
+        /* Desktop default — normal flex child */
+        position: relative;
+        z-index: 10;
+        flex-shrink: 0;
+        transform: none;
+        transition: transform .28s cubic-bezier(.4,0,.2,1);
+      }
+
+      /* ─────────────────────────────────────────
+         TABLET  ≤ 768px
+      ───────────────────────────────────────── */
+      @media (max-width: 768px) {
+        /* Sidebar becomes a fixed overlay */
+        .twin-sidebar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          z-index: 40;
+          transform: translateX(-100%);
+        }
+        .twin-sidebar--open {
+          transform: translateX(0);
+        }
+
+        /* Show hamburger button */
+        .twin-menu-btn {
+          display: flex !important;
+          margin-right: 12px;
+        }
+
+        /* Header tighter padding */
+        .twin-header {
+          padding: 12px 18px !important;
+        }
+        .twin-header-title {
+          font-size: 16px !important;
+        }
+
+        /* Input bar tighter padding */
+        .twin-inputbar {
+          padding: 12px 18px 10px !important;
+        }
+
+        /* Scroll area tighter padding */
+        .twin-scroll-area {
+          padding: 18px 20px !important;
+        }
+
+        /* Welcome screen top padding */
+        .twin-welcome {
+          padding-top: 20px !important;
+        }
+      }
+
+      /* ─────────────────────────────────────────
+         MOBILE  ≤ 480px
+      ───────────────────────────────────────── */
+      @media (max-width: 480px) {
+        .twin-header {
+          padding: 10px 12px !important;
+        }
+        .twin-header-title {
+          font-size: 14px !important;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .twin-inputbar {
+          padding: 10px 12px 8px !important;
+        }
+
+        /* Hide keyboard shortcut hints — useless on touch */
+        .twin-kbd-hints {
+          display: none !important;
+        }
+
+        /* Collapse "ENVOYER" label, keep icon only */
+        .twin-send-label {
+          display: none;
+        }
+
+        /* Send button: icon-only, square */
+        .send-btn-on, .send-btn-off {
+          padding: 8px !important;
+          gap: 0 !important;
+        }
+
+        .twin-scroll-area {
+          padding: 14px 12px !important;
+        }
+
+        .twin-welcome {
+          padding-top: 12px !important;
+        }
+
+        /* WelcomeScreen glass card tighter */
+        .twin-welcome .glass-msg {
+          padding: 18px !important;
+        }
+      }
     `}</style>
   );
 }

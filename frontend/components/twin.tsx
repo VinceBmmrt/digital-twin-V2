@@ -21,22 +21,29 @@ export default function Twin() {
   const [inputHistory, setInputHistory] = useState<string[]>([]);
   const [historyIdx, setHistoryIdx] = useState(-1);
   const [inputFocused, setInputFocused] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-
-    el.scrollTo({
-      top: el.scrollHeight,
-      behavior: "smooth",
-    });
+    el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
   }, [messages.length]);
 
   useEffect(() => {
     const t = setTimeout(() => setBootDone(true), 2200);
     return () => clearTimeout(t);
+  }, []);
+
+  // Close sidebar on resize to desktop
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 769px)");
+    const handler = (e: MediaQueryListEvent) => {
+      if (e.matches) setSidebarOpen(false);
+    };
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
   }, []);
 
   const copyMessage = (text: string, id: string) => {
@@ -158,7 +165,21 @@ export default function Twin() {
     >
       <GlobalStyles />
 
-      {/* Root flex container — fills parent completely */}
+      {/* Sidebar overlay backdrop (mobile only) */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 30,
+            background: "rgba(0,0,0,.55)",
+            backdropFilter: "blur(2px)",
+          }}
+        />
+      )}
+
+      {/* Root flex container */}
       <div
         style={{
           position: "absolute",
@@ -175,12 +196,16 @@ export default function Twin() {
           <BackgroundEffects />
         </div>
 
-        {/* Sidebar */}
-        <Sidebar
-          messagesCount={messages.length}
-          timeStr={timeStr}
-          sessionId={sessionId}
-        />
+        {/* Sidebar — always rendered, CSS controls visibility/position */}
+        <div
+          className={`twin-sidebar${sidebarOpen ? " twin-sidebar--open" : ""}`}
+        >
+          <Sidebar
+            messagesCount={messages.length}
+            timeStr={timeStr}
+            sessionId={sessionId}
+          />
+        </div>
 
         {/* Main content */}
         <main
@@ -196,7 +221,8 @@ export default function Twin() {
             overflow: "hidden",
           }}
         >
-          <Header />
+          <Header onMenuClick={() => setSidebarOpen((o) => !o)} />
+
           {/* Messages scroll area */}
           <div
             ref={scrollRef}
@@ -207,11 +233,10 @@ export default function Twin() {
               overflowX: "hidden",
               padding: "28px 32px",
             }}
+            className="scroll-area twin-scroll-area"
           >
-            {/* Boot Animation */}
             {!bootDone && <BootAnimation />}
 
-            {/* Welcome Screen */}
             {bootDone && isEmpty && (
               <WelcomeScreen
                 onSuggestionClick={(text) => {
@@ -222,7 +247,6 @@ export default function Twin() {
               />
             )}
 
-            {/* Messages */}
             {bootDone && !isEmpty && (
               <MessageList
                 messages={messages}
@@ -233,7 +257,6 @@ export default function Twin() {
             )}
           </div>
 
-          {/* Input Bar */}
           <InputBar
             input={input}
             isLoading={isLoading}

@@ -1,8 +1,13 @@
 "use client";
 
-export default function Header() {
+interface HeaderProps {
+  onMenuClick?: () => void;
+}
+
+export default function Header({ onMenuClick }: HeaderProps) {
   const mono: React.CSSProperties = { fontFamily: "DM Mono, monospace" };
   const display: React.CSSProperties = { fontFamily: "Syne, sans-serif" };
+
   return (
     <header
       style={{
@@ -15,10 +20,44 @@ export default function Header() {
         background: "rgba(8,16,30,.95)",
         backdropFilter: "blur(20px)",
       }}
+      className="twin-header"
     >
-      <div>
+      {/* Hamburger — visible only on mobile via CSS */}
+      <button
+        className="twin-menu-btn"
+        onClick={onMenuClick}
+        aria-label="Toggle sidebar"
+        style={{
+          display: "none" /* shown via media query */,
+          background: "none",
+          border: "1px solid rgba(99,179,255,.15)",
+          borderRadius: "8px",
+          padding: "6px 8px",
+          cursor: "pointer",
+          flexDirection: "column",
+          gap: "4px",
+          alignItems: "center",
+          justifyContent: "center",
+          flexShrink: 0,
+        }}
+      >
+        {[0, 1, 2].map((i) => (
+          <span
+            key={i}
+            style={{
+              display: "block",
+              width: "16px",
+              height: "1.5px",
+              background: "#4a7a9b",
+              borderRadius: "1px",
+            }}
+          />
+        ))}
+      </button>
+
+      <div style={{ minWidth: 0, flex: 1 }}>
         <h1
-          className="shimmer-text"
+          className="shimmer-text twin-header-title"
           style={{ ...display, fontSize: "20px", fontWeight: 700, margin: 0 }}
         >
           Digital Twin AI – Cloud Version
@@ -31,9 +70,17 @@ export default function Header() {
             margin: "3px 0 0",
             letterSpacing: ".05em",
           }}
-        ></p>
+        />
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          flexShrink: 0,
+        }}
+      >
         <div
           style={{
             width: "8px",
