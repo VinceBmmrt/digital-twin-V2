@@ -39,6 +39,13 @@ export default function Twin() {
     });
   }, [messages.length]);
 
+  // Refocus input after response
+  useEffect(() => {
+    if (!isLoading && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isLoading]);
+
   // Close sidebar when resizing to desktop
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 769px)");
