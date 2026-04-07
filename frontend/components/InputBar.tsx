@@ -15,7 +15,7 @@ export default function InputBar({
   onSend,
   inputRef,
 }: InputBarProps) {
-  const isSendDisabled = !input.trim() || isLoading || !bootDone;
+  const isSendDisabled = !input.trim() || !bootDone;
 
   return (
     <div className="twin-inputbar">
@@ -29,7 +29,7 @@ export default function InputBar({
           onFocus={onFocus}
           onBlur={onBlur}
           placeholder="Posez votre question…"
-          disabled={isLoading || !bootDone}
+          disabled={!bootDone}
           className="twin-input"
         />
         <button
