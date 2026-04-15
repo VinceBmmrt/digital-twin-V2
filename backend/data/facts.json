@@ -1,51 +1,56 @@
 {
-    "full_name": "Vincent Bommert",
-    "name": "Vincent",
-    "current_role": "AI Automation Engineer & Fullstack Developer",
-    "location": "Paris, 75011",
-    "email": "vincentbmmrtpro@gmail.com",
-    "linkedin": "https://www.linkedin.com/in/vincent-b-289a2a184/",
-    "specialties": [
-      "AI & LLM Engineering (RAG, Multi-agents, Fine-tuning)",
-      "Fullstack Development (React, Next.js, Node.js, Java)",
-      "Automatisation de processus métier (n8n, LangGraph, CrewAI)"
-    ],
-    "years_experience": 3,
-    "education": [
-      {
-        "degree": "Certification AI Engineer Core Track (LLM, RAG, QLoRA, Agents)",
-        "institution": "Ed Donner, Ligency Team",
-        "year": "2026"
-      },
-      {
-        "degree": "Certification The Complete Agentic AI Engineering Course",
-        "institution": "Ed Donner, Ligency Team",
-        "year": "2025"
-      },
-      {
-        "degree": "Certification Java Spring Framework 6, Spring Boot 3, Spring AI",
-        "institution": "Telusko",
-        "year": "2025"
-      },
-      {
-        "degree": "Certification Complete React Developer (w/Redux, Hooks, GraphQL, Firebase)",
-        "institution": "ZTM",
-        "year": "2023"
-      },
-      {
-        "degree": "Certification Web Development Bootcamp",
-        "institution": "Dr. Angela Yu",
-        "year": "2022"
-      },
-      {
-        "degree": "Titre Professionnel Développeur Web Fullstack Javascript",
-        "institution": "Oclock",
-        "year": "2023"
-      },
-      {
-        "degree": "Licence en Droit",
-        "institution": "Université Paris V – Descartes",
-        "year": "2014"
-      }
-    ]
-  }
+  "full_name": "Vincent Bommert",
+  "name": "Vincent",
+  "current_role": "AI Automation Engineer & Fullstack Developer",
+  "location": "Paris, 75011",
+  "email": "vincentbmmrtpro@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/vincent-b-289a2a184/",
+  "specialties": [
+    "AI & LLM Engineering (RAG, Multi-agents, Fine-tuning)",
+    "Fullstack Development (React, Next.js, Node.js, Java)",
+    "Automatisation de processus métier (n8n, LangGraph, CrewAI)"
+  ],
+  "years_experience": 3,
+  "education": [
+    {
+      "degree": "AI Engineer Production Track: Deploy LLMs & Agents at Scale",
+      "institution": "Ed Donner, Ligency Team",
+      "year": "2026"
+    },
+    {
+      "degree": "Certification AI Engineer Core Track (LLM, RAG, QLoRA, Agents)",
+      "institution": "Ed Donner, Ligency Team",
+      "year": "2026"
+    },
+    {
+      "degree": "Certification The Complete Agentic AI Engineering Course",
+      "institution": "Ed Donner, Ligency Team",
+      "year": "2025"
+    },
+    {
+      "degree": "Certification Java Spring Framework 6, Spring Boot 3, Spring AI",
+      "institution": "Telusko",
+      "year": "2025"
+    },
+    {
+      "degree": "Certification Complete React Developer (w/Redux, Hooks, GraphQL, Firebase)",
+      "institution": "ZTM",
+      "year": "2023"
+    },
+    {
+      "degree": "Certification Web Development Bootcamp",
+      "institution": "Dr. Angela Yu",
+      "year": "2022"
+    },
+    {
+      "degree": "Titre Professionnel Développeur Web Fullstack Javascript",
+      "institution": "Oclock",
+      "year": "2023"
+    },
+    {
+      "degree": "Licence en Droit",
+      "institution": "Université Paris V – Descartes",
+      "year": "2014"
+    }
+  ]
+}
