@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { SKILLS, SYSTEMS } from "./constants";
 
 interface SidebarProps {
@@ -13,6 +14,8 @@ export default function Sidebar({
   timeStr,
   sessionId,
 }: SidebarProps) {
+  const [imgError, setImgError] = useState(false);
+
   const sessionRows = [
     { label: "Messages", value: String(messagesCount) },
     { label: "Heure", value: timeStr },
@@ -26,8 +29,17 @@ export default function Sidebar({
       {/* Profile */}
       <div className="sidebar-profile">
         <div className="sidebar-avatar-wrap">
-          <div className="avatar-ring sidebar-avatar">
-            <span className="sidebar-avatar-initials">VB</span>
+          <div className="avatar-ring sidebar-avatar" style={{ overflow: 'hidden', padding: 0 }}>
+            {!imgError ? (
+              <img
+                src="/avatar.jpg"
+                alt="Vincent Bommert"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', borderRadius: 'inherit' }}
+                onError={() => setImgError(true)}
+              />
+            ) : (
+              <span className="sidebar-avatar-initials">VB</span>
+            )}
           </div>
           <div className="status-dot sidebar-avatar-dot" />
         </div>
