@@ -1,5 +1,6 @@
 import Twin from "@/components/twin";
 import BentoGrid from "@/components/BentoGrid";
+import ArchitectureDiagram from "@/components/ArchitectureDiagram";
 import "@/css/pageStyle.css";
 
 const SKILLS = [
@@ -153,6 +154,7 @@ export default function Home() {
         </div>
       </div>
 
+      <ArchitectureDiagram />
       <BentoGrid />
     </>
   );

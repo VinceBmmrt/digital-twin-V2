@@ -42,7 +42,7 @@ export function useChatSession(): UseChatSessionReturn {
       ]);
       setInput("");
       setIsLoading(true);
-      window.dispatchEvent(new Event("twin:pulse"));
+      window.dispatchEvent(new CustomEvent("twin:pulse", { detail: { phase: "start" } }));
 
       try {
         const res = await fetch(
@@ -68,7 +68,6 @@ export function useChatSession(): UseChatSessionReturn {
 
         const data = await res.json();
         if (!sessionId) setSessionId(data.session_id);
-        window.dispatchEvent(new Event("twin:pulse"));
         setMessages((prev) => [
           ...prev,
           {
@@ -89,6 +88,7 @@ export function useChatSession(): UseChatSessionReturn {
           },
         ]);
       } finally {
+        window.dispatchEvent(new CustomEvent("twin:pulse", { detail: { phase: "end" } }));
         setIsLoading(false);
       }
     },

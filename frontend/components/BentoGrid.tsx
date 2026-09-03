@@ -15,31 +15,20 @@ export default function BentoGrid() {
                 {BENTO_ITEMS.map((item) => (
                     <div
                         key={item.area}
-                        className={`bento-card${item.featured ? ' bento-card--featured' : ''}${item.stat ? ' bento-card--stat' : ''}`}
+                        className={`bento-card${item.featured ? ' bento-card--featured' : ''}`}
                         style={{ '--area': item.area } as CSSProperties}
                     >
-                        {item.stat ? (
-                            item.stats?.map((s) => (
-                                <div key={s.label}>
-                                    <div className="bento-stat-value">{s.value}</div>
-                                    <div className="bento-stat-label">{s.label}</div>
-                                </div>
-                            ))
-                        ) : (
-                            <>
-                                <div className="bento-icon">{item.icon}</div>
-                                <div className="bento-card-title">{item.title}</div>
-                                <p className="bento-card-body">{item.body}</p>
-                                {item.tags && (
-                                    <div className="bento-tags">
-                                        {item.tags.map((t) => (
-                                            <span key={t} className="bento-tag">
-                                                {t}
-                                            </span>
-                                        ))}
-                                    </div>
-                                )}
-                            </>
+                        <div className="bento-icon">{item.icon}</div>
+                        <div className="bento-card-title">{item.title}</div>
+                        <p className="bento-card-body">{item.body}</p>
+                        {item.tags && (
+                            <div className="bento-tags">
+                                {item.tags.map((t) => (
+                                    <span key={t} className="bento-tag">
+                                        {t}
+                                    </span>
+                                ))}
+                            </div>
                         )}
                     </div>
                 ))}

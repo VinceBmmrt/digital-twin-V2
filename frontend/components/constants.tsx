@@ -1,16 +1,14 @@
-import { Sparkles, Cpu, Database, Globe, Bot, Code2, TrendingUp, Boxes } from 'lucide-react';
+import { Sparkles, Cpu, Database, Globe, Bot, Code2, Boxes } from 'lucide-react';
 import type { ReactNode } from 'react';
 import type { Suggestion, Skill, System } from '../types/types';
 
 export interface BentoItem {
-    area: 'a' | 'b' | 'c' | 'd' | 'e' | 'f';
+    area: 'a' | 'b' | 'c' | 'd' | 'f';
     icon?: ReactNode;
     title?: string;
     body?: string;
     tags?: string[];
     featured?: boolean;
-    stat?: boolean;
-    stats?: { value: string; label: string }[];
 }
 
 export const BENTO_ITEMS: BentoItem[] = [
@@ -42,15 +40,6 @@ export const BENTO_ITEMS: BentoItem[] = [
         title: 'Fullstack Production',
         body: 'React, Next.js, Node.js, Java Spring.',
         tags: ['Next.js', 'Spring'],
-    },
-    {
-        area: 'e',
-        stat: true,
-        icon: <TrendingUp size={18} />,
-        stats: [
-            { value: '3 000€', label: 'économisés / badge non restitué' },
-            { value: '2', label: 'démonstrations publiques à CDG' },
-        ],
     },
     {
         area: 'f',

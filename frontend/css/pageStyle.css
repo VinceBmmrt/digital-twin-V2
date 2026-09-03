@@ -421,7 +421,7 @@ body {
   grid-template-areas:
     "a a b b"
     "a a c d"
-    "e e f f";
+    "f f f f";
   gap: 14px;
 }
 .bento-card {
@@ -491,28 +491,6 @@ body {
   border: 1px solid rgba(99, 179, 255, 0.18);
   background: rgba(99, 179, 255, 0.05);
 }
-.bento-card--stat {
-  flex-direction: row;
-  align-items: center;
-  gap: 20px;
-  justify-content: space-around;
-  text-align: center;
-}
-.bento-stat-value {
-  font-family: "Syne", sans-serif;
-  font-weight: 800;
-  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
-  color: #63b3ff;
-  line-height: 1;
-}
-.bento-stat-label {
-  font-family: "DM Mono", monospace;
-  font-size: 9.5px;
-  color: #4a7a9b;
-  margin-top: 6px;
-  letter-spacing: 0.04em;
-}
-
 @media (max-width: 768px) {
   .bento-grid {
     grid-template-columns: 1fr;
@@ -521,12 +499,119 @@ body {
       "b"
       "c"
       "d"
-      "e"
       "f";
   }
-  .bento-card--stat {
-    flex-direction: column;
+}
+
+/* ─── Live architecture diagram ───────────────── */
+.arch-section {
+  position: relative;
+  z-index: 5;
+  max-width: 1020px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 8px 28px 8px;
+}
+.arch-row {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  padding: 8px 0 4px;
+}
+.arch-node-wrap {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+}
+.arch-node-wrap:last-child {
+  flex: 0 0 auto;
+}
+.arch-node {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(99, 179, 255, 0.14);
+  background: rgba(99, 179, 255, 0.02);
+  flex-shrink: 0;
+  transition:
+    border-color 0.25s,
+    background 0.25s,
+    box-shadow 0.25s;
+}
+.arch-node--active {
+  border-color: #63b3ff;
+  background: rgba(99, 179, 255, 0.18);
+  box-shadow:
+    0 0 28px rgba(99, 179, 255, 0.45),
+    inset 0 0 0 1px rgba(99, 179, 255, 0.35);
+}
+.arch-node--thinking {
+  animation: archThinkPulse 1.1s ease-in-out infinite;
+}
+@keyframes archThinkPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 28px rgba(99, 179, 255, 0.45),
+      inset 0 0 0 1px rgba(99, 179, 255, 0.35);
   }
+  50% {
+    box-shadow:
+      0 0 46px rgba(99, 179, 255, 0.75),
+      inset 0 0 0 1px rgba(99, 179, 255, 0.5);
+  }
+}
+.arch-node-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    rgba(99, 179, 255, 0.2),
+    rgba(99, 179, 255, 0.06)
+  );
+  border: 1px solid rgba(99, 179, 255, 0.2);
+  color: #63b3ff;
+  flex-shrink: 0;
+}
+.arch-node--active .arch-node-icon {
+  color: #c8e8ff;
+}
+.arch-node-label {
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: #9fbdd6;
+  white-space: nowrap;
+}
+.arch-node--active .arch-node-label {
+  color: #e6f2ff;
+}
+.arch-node-sub {
+  font-family: "DM Mono", monospace;
+  font-size: 8px;
+  color: #2a4a6a;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.arch-connector {
+  flex: 1;
+  min-width: 20px;
+  height: 2px;
+  margin: 0 6px;
+  background: rgba(99, 179, 255, 0.1);
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+}
+.arch-connector--active {
+  background: #63b3ff;
+  box-shadow: 0 0 8px rgba(99, 179, 255, 0.6);
 }
 
 /* ─── Background decorations ────────────────── */
