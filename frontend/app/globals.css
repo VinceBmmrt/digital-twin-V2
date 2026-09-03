@@ -1,15 +1,11 @@
 @import "tailwindcss";
 
-/* ── Lock page height — prevents ANY child from pushing the layout ── */
+/* ── Allow the page to scroll to content below the hero, never sideways ── */
 html,
 body {
-  height: 100% !important;
-  max-height: 100% !important;
-  overflow: hidden !important;
-  position: fixed !important;
+  min-height: 100% !important;
+  overflow-x: hidden !important;
   width: 100% !important;
-  top: 0 !important;
-  left: 0 !important;
 }
 
 /* Smooth scrolling animation keyframe */

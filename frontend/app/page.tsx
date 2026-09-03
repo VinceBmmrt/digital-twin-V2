@@ -1,4 +1,5 @@
 import Twin from "@/components/twin";
+import BentoGrid from "@/components/BentoGrid";
 import "@/css/pageStyle.css";
 
 const SKILLS = [
@@ -151,6 +152,8 @@ export default function Home() {
           </footer>
         </div>
       </div>
+
+      <BentoGrid />
     </>
   );
 }

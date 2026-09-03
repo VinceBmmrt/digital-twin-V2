@@ -1,5 +1,65 @@
-import { Sparkles, Cpu, Database, Globe } from 'lucide-react';
+import { Sparkles, Cpu, Database, Globe, Bot, Code2, TrendingUp, Boxes } from 'lucide-react';
+import type { ReactNode } from 'react';
 import type { Suggestion, Skill, System } from '../types/types';
+
+export interface BentoItem {
+    area: 'a' | 'b' | 'c' | 'd' | 'e' | 'f';
+    icon?: ReactNode;
+    title?: string;
+    body?: string;
+    tags?: string[];
+    featured?: boolean;
+    stat?: boolean;
+    stats?: { value: string; label: string }[];
+}
+
+export const BENTO_ITEMS: BentoItem[] = [
+    {
+        area: 'a',
+        featured: true,
+        icon: <Bot size={18} />,
+        title: 'Systèmes Multi-Agents',
+        body: "Orchestration de graphes d'agents avec LangGraph : gestion des états, routage conditionnel, parallélisation des tâches. Agents spécialisés pour le sourcing, le matching et la prise de rendez-vous, déployés en production.",
+        tags: ['LangGraph', 'CrewAI', 'OpenAI Agents SDK', 'n8n'],
+    },
+    {
+        area: 'b',
+        icon: <Cpu size={18} />,
+        title: 'Robotique & Computer Vision',
+        body: "Architecture IA reliant ROS2, vision par ordinateur et LLM sur un robot humanoïde Unitree G1 : navigation autonome, YOLO, téléopération VR.",
+        tags: ['ROS2', 'Nav2', 'YOLO', 'Unitree SDK'],
+    },
+    {
+        area: 'c',
+        icon: <Database size={18} />,
+        title: 'RAG & Fine-tuning',
+        body: 'Vectorisation sémantique, reranking, LoRA/QLoRA.',
+        tags: ['RAG', 'QLoRA'],
+    },
+    {
+        area: 'd',
+        icon: <Code2 size={18} />,
+        title: 'Fullstack Production',
+        body: 'React, Next.js, Node.js, Java Spring.',
+        tags: ['Next.js', 'Spring'],
+    },
+    {
+        area: 'e',
+        stat: true,
+        icon: <TrendingUp size={18} />,
+        stats: [
+            { value: '3 000€', label: 'économisés / badge non restitué' },
+            { value: '2', label: 'démonstrations publiques à CDG' },
+        ],
+    },
+    {
+        area: 'f',
+        icon: <Boxes size={18} />,
+        title: 'Stack IA',
+        body: 'Hugging Face, Ollama, MCP Servers, Vector DBs.',
+        tags: ['Hugging Face', 'Ollama', 'MCP', 'ChromaDB'],
+    },
+];
 
 export const BOOT_LINES: [string, string, boolean][] = [
     ['> INITIALIZING AI DIGITAL TWIN...', '#3a7a6a', false],
