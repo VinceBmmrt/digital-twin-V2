@@ -1,17 +1,27 @@
 {
   "full_name": "Vincent Bommert",
   "name": "Vincent",
-  "current_role": "AI Automation Engineer & Fullstack Developer",
+  "current_role": "Ingenieur IA & Developpeur Web Full-Stack (Agents IA, RAG, LLM Engineering)",
   "location": "Paris, 75011",
   "email": "vincentbmmrtpro@gmail.com",
   "linkedin": "https://www.linkedin.com/in/vincent-b-289a2a184/",
+  "languages": {
+    "francais": "Langue maternelle",
+    "anglais": "Courant"
+  },
   "specialties": [
     "AI & LLM Engineering (RAG, Multi-agents, Fine-tuning)",
     "Fullstack Development (React, Next.js, Node.js, Java)",
-    "Automatisation de processus métier (n8n, LangGraph, CrewAI)"
+    "Automatisation de processus metier (n8n, LangGraph, CrewAI)",
+    "Robotique IA & Computer Vision (ROS2, Nav2, Unitree G1 SDK, YOLO)"
   ],
   "years_experience": 3,
   "education": [
+    {
+      "degree": "Proficient AI Engineer",
+      "institution": "Ligency",
+      "year": "2026"
+    },
     {
       "degree": "AI Engineer Production Track: Deploy LLMs & Agents at Scale",
       "institution": "Ed Donner, Ligency Team",
@@ -23,9 +33,19 @@
       "year": "2026"
     },
     {
-      "degree": "Certification The Complete Agentic AI Engineering Course",
-      "institution": "Ed Donner, Ligency Team",
+      "degree": "The Complete Agentic AI Engineering Course",
+      "institution": "Ligency",
       "year": "2025"
+    },
+    {
+      "degree": "AI Coder: Complete Claude Code & Coding Agents Course",
+      "institution": "Ligency",
+      "year": "2026"
+    },
+    {
+      "degree": "AI Builder: Create Agents, Voice Agents & Automations in n8n",
+      "institution": "Ligency",
+      "year": "2026"
     },
     {
       "degree": "Certification Java Spring Framework 6, Spring Boot 3, Spring AI",

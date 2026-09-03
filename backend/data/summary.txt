@@ -1,12 +1,27 @@
-I am french AI specialist and Fullstack Developer with 3 years of experience in web development and AI engineering.
+I am a french AI Engineer and Fullstack Developer with 3 years of experience in production.
 My expertise includes building multi-agent systems, advanced RAG pipelines, LLM fine-tuning,
-and fullstack applications with React, Next.js, Node.js and Java.
+fullstack applications with React, Next.js, Node.js and Java, and embedded AI for humanoid robotics.
 
-Currently, I'm focused on automating HR and medical staffing workflows using multi-agent
-architectures (LangGraph, CrewAI), LLMs (OpenAI / Azure OpenAI), and n8n at EXPERTT.
+At I-Interim (2025/2026), I designed and deployed an ecosystem of AI agents and automated workflows
+for HR and business processes in the airport and medical sectors: multi-agent systems with LangGraph
+(graph orchestration, state management, conditional routing, task parallelization), advanced RAG
+(semantic vectorization, optimized chunking, contextual reranking), specialized agents for sourcing,
+profile/establishment matching, appointment booking, OCR and voice agents, plus a compliance dashboard
+for airport badge/clearance expiration tracking. This automation removed roughly 3,000 EUR in fines per
+unreturned badge across a fleet of several thousand badges, and the agent ecosystem now handles dozens
+of applications per day that used to be fully manual.
 
-My background includes deploying production-ready AI agents in the airport and HR sectors
-at I-Interim, building a hotel-staff matching platform at QualiExtrA, developing a railway
-planning application for SNCF, and fine-tuning a Llama 3.2 model on Modal (serverless GPU cloud).
+Since 2026, I'm also an AI & Robotics Engineer at EXPERTT, working on a Unitree G1 humanoid robot for
+public demonstrations at Paris-Charles de Gaulle airport, within a 4-person R&D team. I supervise 2
+robotics engineers and designed the AI architecture linking ROS2, computer vision and LLMs: ROS2 deployment,
+LIDAR mapping (RViz2), autonomous navigation (Nav2), Unitree G1 SDK integration, a custom-trained YOLO model
+for fall and fire detection with automatic alerts, boarding-pass scanning, immersive teleoperation via Meta
+Quest 3 with real-time hand/finger tracking, facial recognition and multilingual voice interactions (OpenAI).
+This resulted in a working prototype combining autonomous navigation, computer vision, VR teleoperation and
+LLM-based voice interaction, successfully demonstrated twice in public at Paris-Charles de Gaulle airport.
+
+My background also includes building a hotel-staff matching platform at QualiExtrA (Next.js/TypeScript,
+Lighthouse score improved from ~65 to ~90), developing a railway planning application for SNCF, and
+fine-tuning a Llama 3.2 model on Modal (serverless GPU cloud).
 
 
