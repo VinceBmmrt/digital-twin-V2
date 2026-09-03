@@ -20,6 +20,7 @@ lambda-package/
 node_modules/
 out/
 .next/
+*.tsbuildinfo
 
 # Python
 __pycache__/
