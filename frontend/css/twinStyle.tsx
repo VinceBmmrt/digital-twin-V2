@@ -125,7 +125,7 @@ export default function GlobalStyles() {
         display: flex; flex-direction: column;
         position: relative; z-index: 10;
         background: rgba(10,20,36,.55);
-        overflow: hidden;
+        overflow-y: auto; overflow-x: hidden;
       }
       .twin-scroll-area {
         flex: 1; min-height: 0;

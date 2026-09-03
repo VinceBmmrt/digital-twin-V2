@@ -25,7 +25,7 @@ export default function Sidebar({
   ];
 
   return (
-    <aside className="sidebar-root">
+    <aside className="sidebar-root scroll-area">
       {/* Profile */}
       <div className="sidebar-profile">
         <div className="sidebar-avatar-wrap">

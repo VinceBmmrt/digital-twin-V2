@@ -228,7 +228,8 @@ body {
   max-width: 1020px;
   width: 100%;
   margin: 0 auto;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* ─── Identity ──────────────────────────────── */
