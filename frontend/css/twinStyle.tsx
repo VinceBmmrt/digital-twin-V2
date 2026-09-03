@@ -153,56 +153,56 @@ export default function GlobalStyles() {
         flex-shrink: 0; height: 100%;
       }
       .sidebar-profile {
-        padding: 28px 20px 24px;
+        padding: 16px 20px 14px;
         border-bottom: 1px solid rgba(99,179,255,.08);
         display: flex; flex-direction: column;
-        align-items: center; gap: 14px;
+        align-items: center; gap: 8px;
       }
       .sidebar-avatar-wrap { position: relative; }
       .sidebar-avatar {
-        width: 64px; height: 64px; border-radius: 16px;
+        width: 48px; height: 48px; border-radius: 14px;
         display: flex; align-items: center; justify-content: center;
         background: linear-gradient(135deg,rgba(99,179,255,.2),rgba(99,179,255,.06));
         border: 1px solid rgba(99,179,255,.25);
       }
       .sidebar-avatar-initials {
         font-family: 'Syne', sans-serif;
-        font-size: 22px; font-weight: 700; color: #63b3ff;
+        font-size: 17px; font-weight: 700; color: #63b3ff;
       }
       .sidebar-avatar-dot {
         position: absolute; bottom: -4px; right: -4px;
-        width: 13px; height: 13px; border-radius: 50%;
+        width: 11px; height: 11px; border-radius: 50%;
         background: #4ade80; border: 2px solid #060d18;
         box-shadow: 0 0 6px #4ade80;
       }
       .sidebar-identity { text-align: center; }
       .sidebar-name {
         font-family: 'Syne', sans-serif;
-        font-weight: 700; font-size: 15px; color: #fff; letter-spacing: .03em;
+        font-weight: 700; font-size: 14px; color: #fff; letter-spacing: .03em;
       }
       .sidebar-role {
         font-family: 'DM Mono', monospace;
-        font-size: 10px; color: #4a7a9b; margin-top: 3px;
+        font-size: 9px; color: #4a7a9b; margin-top: 2px;
         letter-spacing: .1em; text-transform: uppercase;
       }
       .sidebar-skills {
-        display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;
+        display: flex; flex-wrap: wrap; gap: 5px; justify-content: center;
       }
       .sidebar-skill-chip {
         display: flex; align-items: center; gap: 4px;
-        padding: 2px 8px; border-radius: 6px;
+        padding: 1px 6px; border-radius: 6px;
         font-family: 'DM Mono', monospace;
-        font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+        font-size: 8px; letter-spacing: .08em; text-transform: uppercase;
       }
-      .sidebar-section { padding: 20px; }
+      .sidebar-section { padding: 12px 20px; }
       .sidebar-section--bottom { margin-top: auto; }
       .sidebar-section-title {
         font-family: 'DM Mono', monospace;
         font-size: 9px; color: #2a4a6a;
-        letter-spacing: .18em; text-transform: uppercase; margin-bottom: 14px;
+        letter-spacing: .18em; text-transform: uppercase; margin-bottom: 8px;
       }
       .sidebar-row {
-        display: flex; align-items: center; margin-bottom: 10px;
+        display: flex; align-items: center; margin-bottom: 6px;
       }
       .sidebar-row-label {
         font-family: 'DM Mono', monospace;
