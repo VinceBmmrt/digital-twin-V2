@@ -42,6 +42,7 @@ export function useChatSession(): UseChatSessionReturn {
       ]);
       setInput("");
       setIsLoading(true);
+      window.dispatchEvent(new Event("twin:pulse"));
 
       try {
         const res = await fetch(
@@ -67,6 +68,7 @@ export function useChatSession(): UseChatSessionReturn {
 
         const data = await res.json();
         if (!sessionId) setSessionId(data.session_id);
+        window.dispatchEvent(new Event("twin:pulse"));
         setMessages((prev) => [
           ...prev,
           {
