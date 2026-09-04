@@ -1,6 +1,7 @@
 import Twin from "@/components/twin";
 import BentoGrid from "@/components/BentoGrid";
 import ArchitectureDiagram from "@/components/ArchitectureDiagram";
+import { ScrollHint } from "@/components/ScrollHint";
 import "@/css/pageStyle.css";
 
 const SKILLS = [
@@ -152,6 +153,8 @@ export default function Home() {
             </span>
           </footer>
         </div>
+
+        <ScrollHint />
       </div>
 
       <ArchitectureDiagram />
