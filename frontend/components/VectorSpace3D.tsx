@@ -198,9 +198,11 @@ export default function VectorSpace3D() {
         window.addEventListener('resize', resize);
 
         const clock = new THREE.Clock();
-        let raf: number;
+        let raf = 0;
+        let isRunning = false;
 
         const animate = () => {
+            if (!isRunning) return;
             raf = requestAnimationFrame(animate);
             const t = clock.getElapsedTime();
 
@@ -261,10 +263,31 @@ export default function VectorSpace3D() {
             controls.update();
             renderer.render(scene, camera);
         };
-        animate();
+
+        // Only render while the section is actually visible on screen —
+        // this is the most GPU-intensive component on the page, no reason
+        // to keep it spinning while the user is reading somewhere else.
+        const startLoop = () => {
+            if (isRunning) return;
+            isRunning = true;
+            animate();
+        };
+        const stopLoop = () => {
+            isRunning = false;
+            cancelAnimationFrame(raf);
+        };
+        const visibilityObserver = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) startLoop();
+                else stopLoop();
+            },
+            { threshold: 0.01 },
+        );
+        visibilityObserver.observe(mount);
 
         return () => {
-            cancelAnimationFrame(raf);
+            stopLoop();
+            visibilityObserver.disconnect();
             window.removeEventListener('resize', resize);
             renderer.domElement.removeEventListener('pointermove', onPointerMove);
             renderer.domElement.removeEventListener('pointerleave', onPointerLeave);

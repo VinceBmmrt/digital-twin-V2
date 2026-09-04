@@ -13,8 +13,25 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://d2s1zfamsgsifg.cloudfront.net"),
   title: "Vincent Bommert — AI Digital Twin",
-  description: "Digital Twin IA de Vincent Bommert — LLM, RAG, Multi-agents",
+  description:
+    "Ingénieur IA & développeur fullstack. Discutez en direct avec mon jumeau numérique : agents IA, RAG, robotique.",
+  openGraph: {
+    title: "Vincent Bommert — AI Digital Twin",
+    description:
+      "Ingénieur IA & développeur fullstack. Discutez en direct avec mon jumeau numérique : agents IA, RAG, robotique.",
+    url: "https://d2s1zfamsgsifg.cloudfront.net",
+    siteName: "Vincent Bommert — Digital Twin",
+    locale: "fr_FR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Vincent Bommert — AI Digital Twin",
+    description:
+      "Ingénieur IA & développeur fullstack. Discutez en direct avec mon jumeau numérique.",
+  },
 };
 
 export default function RootLayout({

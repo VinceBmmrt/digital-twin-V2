@@ -47,7 +47,10 @@ export function CursorTrail() {
         window.addEventListener('mousemove', onMove);
 
         let raf: number;
+        let running = false;
         const draw = () => {
+            if (!running) return;
+            raf = requestAnimationFrame(draw);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles = particles.filter((p) => p.life > 0);
             for (const p of particles) {
@@ -59,12 +62,17 @@ export function CursorTrail() {
                 ctx.fillStyle = `rgba(99, 179, 255, ${p.life * 0.55})`;
                 ctx.fill();
             }
-            raf = requestAnimationFrame(draw);
         };
-        draw();
+
+        const startLoop = () => { if (running) return; running = true; draw(); };
+        const stopLoop = () => { running = false; cancelAnimationFrame(raf); };
+        const onVisibility = () => { if (document.hidden) stopLoop(); else startLoop(); };
+        document.addEventListener('visibilitychange', onVisibility);
+        startLoop();
 
         return () => {
-            cancelAnimationFrame(raf);
+            stopLoop();
+            document.removeEventListener('visibilitychange', onVisibility);
             window.removeEventListener('mousemove', onMove);
             window.removeEventListener('resize', resize);
         };

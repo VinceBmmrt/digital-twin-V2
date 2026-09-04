@@ -45,7 +45,10 @@ export function NeuralCanvas() {
         window.addEventListener('twin:pulse', onPulse);
 
         let raf: number;
+        let running = false;
         const draw = () => {
+            if (!running) return;
+            raf = requestAnimationFrame(draw);
             const w = W(), h = H();
             ctx.clearRect(0, 0, w, h);
 
@@ -108,11 +111,17 @@ export function NeuralCanvas() {
                 ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(180,225,255,${0.4 + g * 0.5})`; ctx.fill();
             }
-            raf = requestAnimationFrame(draw);
         };
-        draw();
+
+        const startLoop = () => { if (running) return; running = true; draw(); };
+        const stopLoop = () => { running = false; cancelAnimationFrame(raf); };
+        const onVisibility = () => { if (document.hidden) stopLoop(); else startLoop(); };
+        document.addEventListener('visibilitychange', onVisibility);
+        startLoop();
+
         return () => {
-            cancelAnimationFrame(raf);
+            stopLoop();
+            document.removeEventListener('visibilitychange', onVisibility);
             window.removeEventListener('resize', resize);
             window.removeEventListener('mousemove', onMouseMove);
             window.removeEventListener('mouseleave', onMouseLeave);
