@@ -2,6 +2,8 @@ import Twin from "@/components/twin";
 import BentoGrid from "@/components/BentoGrid";
 import ArchitectureDiagram from "@/components/ArchitectureDiagram";
 import { ScrollHint } from "@/components/ScrollHint";
+import { NeuralCanvas } from "@/components/NeuralCanvas";
+import { CursorTrail } from "@/components/CursorTrail";
 import "@/css/pageStyle.css";
 
 const SKILLS = [
@@ -56,11 +58,16 @@ export default function Home() {
         <div className="bg-orb bg-orb-2" />
       </div>
       <div className="bg-dots" />
+      <div className="bg-neural">
+        <NeuralCanvas />
+      </div>
       <div className="bg-fx">
         <div className="bg-scan" />
         <div className="bg-lines" />
         <div className="bg-vignette" />
       </div>
+
+      <CursorTrail />
 
       {/* ── Full-page layout ── */}
       <div className="page-fixed">
