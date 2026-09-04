@@ -15,7 +15,7 @@ export default function InputBar({
   onSend,
   inputRef,
 }: InputBarProps) {
-  const isSendDisabled = !input.trim() || !bootDone;
+  const isSendDisabled = !input.trim() || !bootDone || isLoading;
 
   return (
     <div className="twin-inputbar">

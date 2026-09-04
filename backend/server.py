@@ -65,12 +65,6 @@ class ChatResponse(BaseModel):
     session_id: str
 
 
-class Message(BaseModel):
-    role: str
-    content: str
-    timestamp: str
-
-
 # Memory management functions
 def get_memory_path(session_id: str) -> str:
     return f"{session_id}.json"

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { MarkdownContent } from './MarkdownContent';
 
 /* ── Typewriter ── */
@@ -8,7 +8,7 @@ export function TypedText({ text }: { text: string }) {
     const [displayed, setDisplayed] = useState('');
     const [done, setDone] = useState(false);
     useEffect(() => {
-        setDisplayed(''); setDone(false); let i = 0;
+        let i = 0;
         const iv = setInterval(() => { i += 3; setDisplayed(text.slice(0, i)); if (i >= text.length) { clearInterval(iv); setDone(true); } }, 12);
         return () => clearInterval(iv);
     }, [text]);

@@ -16,6 +16,16 @@ body {
   overflow-x: hidden;
   background: #060d18;
 }
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 179, 255, 0.14);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 
 /* ─── Keyframes ─────────────────────────────── */
 @keyframes fadeUp {
@@ -421,7 +431,7 @@ body {
   grid-template-areas:
     "a a b b"
     "a a c d"
-    "f f f f";
+    "e e e e";
   gap: 14px;
 }
 .bento-grid > .reveal {
@@ -503,7 +513,7 @@ body {
       "b"
       "c"
       "d"
-      "f";
+      "e";
   }
 }
 

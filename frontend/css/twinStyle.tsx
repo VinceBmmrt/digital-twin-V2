@@ -49,8 +49,10 @@ export default function GlobalStyles() {
 
       /* ─── Scrollbar ─────────────────────────────── */
       .scroll-area { overflow-y: auto; }
-      .scroll-area::-webkit-scrollbar { width: 3px; }
-      .scroll-area::-webkit-scrollbar-thumb { background: rgba(99,179,255,.1); border-radius: 999px; }
+      .scroll-area::-webkit-scrollbar,
+      .twin-main::-webkit-scrollbar { width: 3px; }
+      .scroll-area::-webkit-scrollbar-thumb,
+      .twin-main::-webkit-scrollbar-thumb { background: rgba(99,179,255,.1); border-radius: 999px; }
 
       /* ─── Skill chip ────────────────────────────── */
       .skill-chip {

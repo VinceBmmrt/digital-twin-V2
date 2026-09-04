@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import type { Suggestion, Skill, System } from '../types/types';
 
 export interface BentoItem {
-    area: 'a' | 'b' | 'c' | 'd' | 'f';
+    area: 'a' | 'b' | 'c' | 'd' | 'e';
     icon?: ReactNode;
     title?: string;
     body?: string;
@@ -42,7 +42,7 @@ export const BENTO_ITEMS: BentoItem[] = [
         tags: ['Next.js', 'Spring'],
     },
     {
-        area: 'f',
+        area: 'e',
         icon: <Boxes size={18} />,
         title: 'Stack IA',
         body: 'Hugging Face, Ollama, MCP Servers, Vector DBs.',

@@ -26,7 +26,7 @@ export default function WelcomeScreen({
             <p className="twin-welcome-body">
               Mes expériences professionnelles, projets personnels et
               compétences techniques sont chargés en contexte. Posez-moi
-              n'importe quelle question.
+              n&apos;importe quelle question.
             </p>
           </div>
         </div>
