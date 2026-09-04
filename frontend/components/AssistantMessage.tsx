@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
 import { Message } from '../types/types';
 import { TypedText } from './TypedText';
@@ -16,11 +17,23 @@ interface AssistantMessageProps {
 export default function AssistantMessage({ message, idx, isLast, copiedId, onCopy }: AssistantMessageProps) {
 const mono: React.CSSProperties = { fontFamily: 'DM Mono, monospace' };
 const display: React.CSSProperties = { fontFamily: 'Syne, sans-serif' };
-    
+    const [imgError, setImgError] = useState(false);
+
     return (
         <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-            <div style={{ width: '32px', height: '32px', borderRadius: '10px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '4px', background: 'linear-gradient(135deg,rgba(99,179,255,.18),rgba(99,179,255,.06))', border: '1px solid rgba(99,179,255,.2)' }}>
-                <span style={{ ...display, color: '#63b3ff', fontSize: '10px', fontWeight: 700 }}>VB</span>
+            <div style={{ width: '32px', height: '32px', borderRadius: '10px', flexShrink: 0, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '4px', background: 'linear-gradient(135deg,rgba(99,179,255,.18),rgba(99,179,255,.06))', border: '1px solid rgba(99,179,255,.2)' }}>
+                {!imgError ? (
+                    <img
+                        src="/avatar.jpg"
+                        alt="Vincent Bommert"
+                        width={32}
+                        height={32}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                        onError={() => setImgError(true)}
+                    />
+                ) : (
+                    <span style={{ ...display, color: '#63b3ff', fontSize: '10px', fontWeight: 700 }}>VB</span>
+                )}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
