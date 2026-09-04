@@ -426,12 +426,11 @@ body {
 }
 .bento-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, minmax(140px, auto));
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, minmax(200px, auto));
   grid-template-areas:
-    "a a b b"
-    "a a c d"
-    "e e e e";
+    "a f b"
+    "c d e";
   gap: 14px;
 }
 .bento-grid > .reveal {
@@ -453,9 +452,24 @@ body {
     transform 0.2s;
 }
 .bento-card:hover {
-  border-color: rgba(99, 179, 255, 0.32);
-  background: rgba(99, 179, 255, 0.06);
+  border-color: color-mix(in srgb, var(--accent, #63b3ff) 45%, transparent);
+  background: color-mix(in srgb, var(--accent, #63b3ff) 8%, transparent);
   transform: translateY(-2px);
+}
+.bento-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 14px;
+  right: 14px;
+  height: 2px;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(90deg, transparent, var(--accent, #63b3ff), transparent);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.bento-card:hover::before {
+  opacity: 0.7;
 }
 .bento-icon {
   width: 34px;
@@ -466,11 +480,11 @@ body {
   justify-content: center;
   background: linear-gradient(
     135deg,
-    rgba(99, 179, 255, 0.2),
-    rgba(99, 179, 255, 0.06)
+    color-mix(in srgb, var(--accent, #63b3ff) 22%, transparent),
+    color-mix(in srgb, var(--accent, #63b3ff) 6%, transparent)
   );
-  border: 1px solid rgba(99, 179, 255, 0.2);
-  color: #63b3ff;
+  border: 1px solid color-mix(in srgb, var(--accent, #63b3ff) 30%, transparent);
+  color: var(--accent, #63b3ff);
   flex-shrink: 0;
 }
 .bento-card-title {
@@ -479,15 +493,34 @@ body {
   color: #e6f2ff;
   font-size: 15px;
 }
-.bento-card--featured .bento-card-title {
-  font-size: 19px;
-}
 .bento-card-body {
   font-family: "DM Mono", monospace;
   font-size: 11.5px;
   line-height: 1.65;
   color: #4a7a9b;
   font-weight: 300;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bento-highlights {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  color: #7a9fc0;
+}
+.bento-highlights li {
+  padding-left: 14px;
+  position: relative;
+}
+.bento-highlights li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent, #63b3ff);
 }
 .bento-tags {
   display: flex;
@@ -499,17 +532,18 @@ body {
   font-family: "DM Mono", monospace;
   font-size: 9px;
   letter-spacing: 0.06em;
-  color: #63b3ff;
+  color: var(--accent, #63b3ff);
   padding: 2px 8px;
   border-radius: 999px;
-  border: 1px solid rgba(99, 179, 255, 0.18);
-  background: rgba(99, 179, 255, 0.05);
+  border: 1px solid color-mix(in srgb, var(--accent, #63b3ff) 30%, transparent);
+  background: color-mix(in srgb, var(--accent, #63b3ff) 8%, transparent);
 }
 @media (max-width: 768px) {
   .bento-grid {
     grid-template-columns: 1fr;
     grid-template-areas:
       "a"
+      "f"
       "b"
       "c"
       "d"
@@ -544,7 +578,7 @@ body {
   transition: opacity 0.3s;
   background: radial-gradient(
     260px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(99, 179, 255, 0.16),
+    color-mix(in srgb, var(--accent, #63b3ff) 18%, transparent),
     transparent 70%
   );
 }
@@ -595,6 +629,51 @@ body {
 .scroll-hint-chevron {
   color: #63b3ff;
   animation: bounce 1.6s ease-in-out infinite;
+}
+
+/* ─── Vector space visualization ──────────────── */
+.vector-section {
+  position: relative;
+  z-index: 5;
+  max-width: 1020px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 8px 28px 8px;
+}
+.vector-canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  border-radius: 16px;
+  border: 1px solid rgba(99, 179, 255, 0.12);
+  background: rgba(99, 179, 255, 0.02);
+  overflow: hidden;
+  cursor: grab;
+}
+.vector-canvas-wrap:active {
+  cursor: grabbing;
+}
+.vector-canvas-wrap canvas {
+  display: block;
+}
+.vector-tooltip {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(6, 13, 24, 0.92);
+  border: 1px solid rgba(99, 179, 255, 0.25);
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  line-height: 1.5;
+  color: #9fbdd6;
+  white-space: nowrap;
+}
+.vector-tooltip b {
+  color: #e6f2ff;
 }
 
 /* ─── Live architecture diagram ───────────────── */
