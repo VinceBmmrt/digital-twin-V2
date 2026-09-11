@@ -114,3 +114,21 @@ export const SYSTEMS: System[] = [
     { label: 'RAG Index', ok: true },
     { label: 'Memory', ok: true },
 ];
+
+export interface VectorCluster {
+    name: string;
+    color: string;
+    points: string[];
+}
+
+export const VECTOR_CLUSTERS: VectorCluster[] = [
+    { name: 'Langages', color: '#93c5fd', points: ['Python', 'JavaScript', 'TypeScript', 'Java'] },
+    { name: 'AI & LLM', color: '#60a5fa', points: ['Multi-Agent Systems', 'LangChain', 'LangGraph', 'CrewAI', 'OpenAI Agents SDK', 'AutoGen', 'MCP Servers', 'Hugging Face', 'RAG', 'Ollama', 'Fine-tuning', 'LoRA', 'QLoRA', 'Quantization', 'Vector Databases', 'n8n'] },
+    { name: 'Machine Learning', color: '#f472b6', points: ['PyTorch', 'Scikit-learn', 'NumPy', 'Pandas', 'Weights & Biases'] },
+    { name: 'Robotique & Computer Vision', color: '#818cf8', points: ['ROS2', 'Nav2', 'Unitree G1 SDK', 'YOLO', 'LIDAR', 'RViz2', 'Gazebo'] },
+    { name: 'Backend', color: '#c084fc', points: ['FastAPI', 'Spring Boot', 'Node.js', 'Express.js', 'REST APIs', 'JWT / OAuth2', 'Stripe'] },
+    { name: 'Frontend', color: '#a78bfa', points: ['React.js', 'Next.js', 'Redux', 'Zustand', 'Socket.io', 'Styled-components', 'Tailwind CSS', 'Gradio'] },
+    { name: 'Bases de données', color: '#67e8f9', points: ['PostgreSQL', 'MongoDB', 'Firebase', 'SQLite', 'Pinecone', 'ChromaDB', 'Supabase Vector'] },
+    { name: 'MLOps & Cloud', color: '#e879f9', points: ['Docker', 'Terraform', 'GitHub Actions', 'Modal', 'GCP', 'Azure', 'AWS Bedrock', 'AWS Lambda', 'AWS S3', 'AWS CloudFront'] },
+    { name: 'Tests', color: '#22d3ee', points: ['Jest', 'Pytest', 'Vitest', 'Supertest', 'Enzyme', 'Cypress', 'Playwright'] },
+];

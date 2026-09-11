@@ -627,6 +627,51 @@ body {
   animation: bounce 1.6s ease-in-out infinite;
 }
 
+/* ─── Vector space visualization ──────────────── */
+.vector-section {
+  position: relative;
+  z-index: 5;
+  max-width: 1020px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 8px 28px 8px;
+}
+.vector-canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: 640px;
+  border-radius: 16px;
+  border: 1px solid rgba(99, 179, 255, 0.12);
+  background: rgba(99, 179, 255, 0.02);
+  overflow: hidden;
+  cursor: grab;
+}
+.vector-canvas-wrap:active {
+  cursor: grabbing;
+}
+.vector-canvas-wrap canvas {
+  display: block;
+}
+.vector-tooltip {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(6, 13, 24, 0.92);
+  border: 1px solid rgba(99, 179, 255, 0.25);
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  line-height: 1.5;
+  color: #9fbdd6;
+  white-space: nowrap;
+}
+.vector-tooltip b {
+  color: #e6f2ff;
+}
+
 /* ─── Live architecture diagram ───────────────── */
 .arch-section {
   position: relative;
