@@ -1,7 +1,6 @@
 import Twin from "@/components/twin";
 import BentoGrid from "@/components/BentoGrid";
 import ArchitectureDiagram from "@/components/ArchitectureDiagram";
-import VectorSpace from "@/components/VectorSpace3D";
 import { ScrollHint } from "@/components/ScrollHint";
 import { NeuralCanvas } from "@/components/NeuralCanvas";
 import { CursorTrail } from "@/components/CursorTrail";
@@ -166,7 +165,6 @@ export default function Home() {
       </div>
 
       <ArchitectureDiagram />
-      <VectorSpace />
       <BentoGrid />
     </>
   );

@@ -114,23 +114,3 @@ export const SYSTEMS: System[] = [
     { label: 'RAG Index', ok: true },
     { label: 'Memory', ok: true },
 ];
-
-export interface VectorCluster {
-    name: string;
-    color: string;
-    points: string[];
-}
-
-export const VECTOR_CLUSTERS: VectorCluster[] = [
-    { name: 'Agents IA', color: '#60a5fa', points: ['LangGraph', 'CrewAI', 'Multi-agents', 'n8n', 'OpenAI SDK'] },
-    { name: 'Automatisation RH & Sécurité', color: '#38bdf8', points: ['Analyse de CV', 'Sourcing médical', 'Vérification badges', 'Prise de RDV'] },
-    { name: 'Agents Vocaux', color: '#22d3ee', points: ['TTS', 'STT', 'Voix multilingue'] },
-    { name: 'RAG & LLM', color: '#2dd4bf', points: ['RAG', 'Fine-tuning', 'LoRA', 'QLoRA', 'Ollama'] },
-    { name: 'Robotique & XR', color: '#818cf8', points: ['ROS2', 'Nav2', 'RViz2', 'LIDAR', 'YOLO', 'Reconnaissance faciale', 'Téléopération XR'] },
-    { name: 'Frontend', color: '#a78bfa', points: ['React', 'Next.js', 'TypeScript', 'Redux'] },
-    { name: 'Backend', color: '#c084fc', points: ['Node.js', 'Spring Boot', 'FastAPI', 'Express'] },
-    { name: 'Cloud & MLOps', color: '#e879f9', points: ['AWS', 'Docker', 'Bedrock', 'Modal'] },
-    { name: 'Machine Learning', color: '#f472b6', points: ['PyTorch', 'NumPy', 'Pandas', 'W&B'] },
-    { name: 'Bases de données', color: '#67e8f9', points: ['PostgreSQL', 'MongoDB', 'ChromaDB', 'Supabase Vector'] },
-    { name: 'Tests & Qualité', color: '#93c5fd', points: ['Jest', 'Pytest', 'Playwright', 'Cypress'] },
-];
