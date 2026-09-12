@@ -139,6 +139,15 @@ resource "aws_iam_role_policy" "lambda_memory_s3" {
         Action   = ["s3:GetObject", "s3:PutObject"]
         Resource = "${aws_s3_bucket.memory.arn}/*"
       },
+      {
+        # Needed so GetObject on a not-yet-created session file returns a
+        # normal NoSuchKey (which the app already handles) instead of a
+        # generic AccessDenied, which S3 returns when the caller lacks
+        # ListBucket on the bucket itself, regardless of the key's existence.
+        Effect   = "Allow"
+        Action   = "s3:ListBucket"
+        Resource = aws_s3_bucket.memory.arn
+      },
     ]
   })
 }
