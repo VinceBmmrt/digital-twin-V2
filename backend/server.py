@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 import os
 from dotenv import load_dotenv
 from typing import Optional, List, Dict
@@ -58,6 +58,17 @@ if USE_S3:
 class ChatRequest(BaseModel):
     message: str
     session_id: Optional[str] = None
+
+    @field_validator("session_id")
+    @classmethod
+    def session_id_must_be_uuid(cls, value: Optional[str]) -> Optional[str]:
+        if value is None:
+            return value
+        try:
+            uuid.UUID(value)
+        except ValueError:
+            raise ValueError("session_id must be a valid UUID")
+        return value
 
 
 class ChatResponse(BaseModel):
@@ -220,6 +231,11 @@ async def chat(request: Request, body: ChatRequest):
 @app.get("/conversation/{session_id}")
 async def get_conversation(session_id: str):
     """Retrieve conversation history"""
+    try:
+        uuid.UUID(session_id)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid session_id")
+
     try:
         conversation = load_conversation(session_id)
         return {"session_id": session_id, "messages": conversation}

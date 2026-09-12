@@ -89,6 +89,13 @@ export default function VectorSpace3D() {
         controls.enablePan = false;
         controls.autoRotate = true;
         controls.autoRotateSpeed = 0.6;
+        // OrbitControls forces touchAction: 'none' on connect to capture touch
+        // drags for rotation, which also blocks the page from scrolling past
+        // this section on mobile. Disable touch rotation and hand the gesture
+        // back to the browser so a vertical swipe scrolls the page as normal.
+        controls.touches.ONE = null;
+        controls.touches.TWO = null;
+        renderer.domElement.style.touchAction = 'pan-y';
 
         const glowTexture = makeGlowTexture();
         const nodes: NodeEntry[] = [];
@@ -193,6 +200,10 @@ export default function VectorSpace3D() {
             scene.add(new THREE.Line(geo, lineMaterial));
         }
 
+        // Hoisted once instead of rebuilt every animation frame, `nodes` never
+        // changes after setup.
+        const nodeSprites = nodes.map((n) => n.sprite);
+
         // Highlight line group, rebuilt on hover.
         let highlightLines = new THREE.Group();
         scene.add(highlightLines);
@@ -240,13 +251,19 @@ export default function VectorSpace3D() {
             }
 
             raycaster.setFromCamera(pointer, camera);
-            const hits = raycaster.intersectObjects(nodes.map((n) => n.sprite));
+            const hits = raycaster.intersectObjects(nodeSprites);
             const hit = hits[0]?.object as THREE.Sprite | undefined;
             const newHovered = hit ? nodes.find((n) => n.sprite === hit) ?? null : null;
 
             if (newHovered !== hovered) {
                 hovered = newHovered;
                 scene.remove(highlightLines);
+                highlightLines.traverse((obj) => {
+                    if (obj instanceof THREE.Line) {
+                        obj.geometry.dispose();
+                        (obj.material as THREE.Material).dispose();
+                    }
+                });
                 highlightLines = new THREE.Group();
 
                 for (const n of nodes) {
@@ -290,8 +307,8 @@ export default function VectorSpace3D() {
             composer.render();
         };
 
-        // Only render while the section is actually visible on screen —
-        // this is the most GPU-intensive component on the page, no reason
+        // Only render while the section is actually visible on screen.
+        // This is the most GPU-intensive component on the page, no reason
         // to keep it spinning while the user is reading somewhere else.
         const startLoop = () => {
             if (isRunning) return;
@@ -320,7 +337,10 @@ export default function VectorSpace3D() {
             controls.dispose();
             scene.traverse((obj) => {
                 if (obj instanceof THREE.Sprite || obj instanceof THREE.Line) {
-                    obj.geometry?.dispose?.();
+                    // THREE.Sprite instances share one module-level geometry
+                    // singleton, so only Line geometries (unique per instance)
+                    // should be disposed here.
+                    if (obj instanceof THREE.Line) obj.geometry.dispose();
                     const mat = obj.material;
                     if (Array.isArray(mat)) mat.forEach((m) => m.dispose());
                     else mat?.dispose?.();

@@ -103,7 +103,12 @@ resource "aws_iam_role_policy_attachment" "github_route53" {
   role       = aws_iam_role.github_actions.name
 }
 
-# Custom policy for additional permissions
+# Custom policy for additional permissions.
+# IAM role management/PassRole is scoped to this project's own Lambda execution
+# roles (twin-<env>-lambda-role) instead of Resource "*", and PassRole is
+# further restricted to only being usable when passing to Lambda, to close off
+# the create-role -> attach-admin-policy -> pass-role privilege-escalation
+# path a Resource "*" grant would otherwise allow.
 resource "aws_iam_role_policy" "github_additional" {
   name = "github-actions-additional"
   role = aws_iam_role.github_actions.id
@@ -112,6 +117,7 @@ resource "aws_iam_role_policy" "github_additional" {
     Version = "2012-10-17"
     Statement = [
       {
+        Sid    = "ManageAppLambdaRole"
         Effect = "Allow"
         Action = [
           "iam:CreateRole",
@@ -125,23 +131,47 @@ resource "aws_iam_role_policy" "github_additional" {
           "iam:ListRolePolicies",
           "iam:ListAttachedRolePolicies",
           "iam:UpdateAssumeRolePolicy",
-          "iam:PassRole",
           "iam:TagRole",
           "iam:UntagRole",
           "iam:ListInstanceProfilesForRole",
+        ]
+        Resource = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.project_name}-*-lambda-role"
+      },
+      {
+        Sid      = "PassLambdaRoleToLambdaOnly"
+        Effect   = "Allow"
+        Action   = "iam:PassRole"
+        Resource = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.project_name}-*-lambda-role"
+        Condition = {
+          StringEquals = {
+            "iam:PassedToService" = "lambda.amazonaws.com"
+          }
+        }
+      },
+      {
+        Sid    = "GithubOidcProviderMgmt"
+        Effect = "Allow"
+        Action = [
           "sts:GetCallerIdentity",
           "iam:CreateOpenIDConnectProvider",
           "iam:DeleteOpenIDConnectProvider",
           "iam:GetOpenIDConnectProvider",
+        ]
+        Resource = "*"
+      },
+      {
+        Sid    = "CloudFrontDistributionMgmt"
+        Effect = "Allow"
+        Action = [
           "cloudfront:GetDistribution",
           "cloudfront:GetDistributionConfig",
           "cloudfront:ListDistributions",
           "cloudfront:UpdateDistribution",
           "cloudfront:DeleteDistribution",
-          "cloudfront:CreateInvalidation"
+          "cloudfront:CreateInvalidation",
         ]
         Resource = "*"
-      }
+      },
     ]
   })
 }
